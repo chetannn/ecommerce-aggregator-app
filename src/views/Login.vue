@@ -4,7 +4,7 @@
           <v-layout align-center justify-center>
             <v-flex xs12 sm4 elevation-6>
               <v-card>
-                  <v-card-title>Register</v-card-title>
+                  <v-card-title class="headline">Login</v-card-title>
 
                 <v-card-text class="pt-4">
                   <div>
@@ -24,7 +24,7 @@
                           required
                         ></v-text-field>
                         <v-layout justify-space-between>
-                            <v-btn text @click="register">Register</v-btn>
+                            <v-btn :loading="loading" text @click="login">Login</v-btn>
                             <a href="">Forgot Password</a>
                         </v-layout>
                   </div>
@@ -40,20 +40,27 @@
 import AuthenticationService from '@/services/AuthenticationService'
 
 export default {
-  name: 'Register',
+  name: 'Login',
   data() {
       return {
           email: null,
-          password: null
+          password: null,
+          loading: false
       }
   },
   methods: {
-    async register() {
-       const response = await AuthenticationService.register({
+    async login() {
+        this.loading = true
+
+        setTimeout(async () => {
+             const response = await AuthenticationService.login({
             email: this.email,
             password: this.password
         })
-        console.log(response.data)
+            this.$store.dispatch('setToken', response.data.token)
+            this.$store.dispatch('setUser', response.data.user)
+            this.loading = false
+        }, 500)
     }  
   }
 }
