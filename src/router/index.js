@@ -34,7 +34,7 @@ const routes = [
     name: 'products',
     component: Products,
     beforeEnter: (to, from, next) => {
-      if(!store.getters['isUserLoggedIn']) {
+      if(!store.getters['auth/isUserLoggedIn']) {
           return next({
             name: 'login'
           })

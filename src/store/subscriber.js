@@ -3,7 +3,7 @@ import Api from '@/services/Api'
 
 store.subscribe((mutation) => {
     switch(mutation.type) {
-        case 'setToken':
+        case 'auth/setToken':
             if(mutation.payload) {
                 Api().defaults.headers.common['Authorization'] = `Bearer ${mutation.payload}`
                 localStorage.setItem('token', mutation.payload)

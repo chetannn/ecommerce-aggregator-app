@@ -59,7 +59,7 @@ export default {
         //     password: this.password
         // })
 
-        await this.$store.dispatch('signIn', {
+        await this.$store.dispatch('auth/signIn', {
           email: this.email,
           password: this.password
         })
