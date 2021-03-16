@@ -21,6 +21,7 @@
                           counter
                           type="password"
                           outlined
+                          @keyup.enter="login"
                           required
                         ></v-text-field>
                         <v-layout justify-space-between>
@@ -53,12 +54,17 @@ export default {
         this.loading = true
 
         setTimeout(async () => {
-             const response = await AuthenticationService.login({
-            email: this.email,
-            password: this.password
+        //      const response = await AuthenticationService.login({
+        //     email: this.email,
+        //     password: this.password
+        // })
+
+        await this.$store.dispatch('signIn', {
+          email: this.email,
+          password: this.password
         })
-            this.$store.dispatch('setToken', response.data.token)
-            this.$store.dispatch('setUser', response.data.user)
+            // this.$store.dispatch('setToken', response.data.token)
+            // this.$store.dispatch('setUser', response.data.user)
             this.loading = false
 
             this.$router.push({name: 'products'})

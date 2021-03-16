@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Products from '../views/products/Index.vue'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -31,7 +32,15 @@ const routes = [
   {
     path: '/products',
     name: 'products',
-    component: Products
+    component: Products,
+    beforeEnter: (to, from, next) => {
+      if(!store.getters['isUserLoggedIn']) {
+          return next({
+            name: 'login'
+          })
+      }
+      next()
+    }
   }
 ]
 
