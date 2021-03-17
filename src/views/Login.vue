@@ -13,13 +13,15 @@
                   label="E-mail address"
                   v-model="email"
                   required
-                  prepend-icon="mdi-account-circle"
+                  outlined
+                  prepend-inner-icon="mdi-account-circle"
                 ></v-text-field>
                 <v-text-field
                   label="Password"
                   v-model="password"
                   min="8"
                   counter
+                  outlined
                  :type="showPassword ? 'text' : 'password'"
                   @keyup.enter="login"
                   required
@@ -55,15 +57,15 @@ export default {
   },
   methods: {
     async login() {
-      this.loading = true;
+      this.loading = true
 
       setTimeout(async () => {
         await this.$store.dispatch('auth/signIn', {
           email: this.email,
           password: this.password,
-        });
-        this.loading = false;
-        this.$router.push({ name: 'products' });
+        })
+        this.loading = false
+        this.$router.push({ name: 'products' })
       }, 500);
     },
   },
