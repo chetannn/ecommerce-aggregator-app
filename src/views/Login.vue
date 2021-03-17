@@ -1,75 +1,71 @@
 <template>
   <div>
-      <v-container fluid fill-height>
-          <v-layout align-center justify-center>
-            <v-flex xs12 sm4 elevation-6>
-              <v-card>
-                  <v-card-title class="headline">Login</v-card-title>
+    <v-container fluid fill-height>
+      <v-layout align-center justify-center>
+        <v-flex xs12 sm4 elevation-6>
+          <v-card>
+            <v-card-title><h1 class="display-1">Login</h1></v-card-title>
+            <v-divider></v-divider>
 
-                <v-card-text class="pt-4">
-                  <div>
-                        <v-text-field
-                          label="E-mail address"
-                          v-model="email"
-                          outlined
-                          required
-                        ></v-text-field>
-                        <v-text-field
-                          label="Password"
-                          v-model="password"
-                          min="8"
-                          counter
-                          type="password"
-                          outlined
-                          @keyup.enter="login"
-                          required
-                        ></v-text-field>
-                        <v-layout justify-space-between>
-                            <v-btn :loading="loading" text @click="login">Login</v-btn>
-                            <a href="">Forgot Password</a>
-                        </v-layout>
-                  </div>
-                </v-card-text>
-              </v-card>
-            </v-flex>
-          </v-layout> 
-      </v-container>
+            <v-card-text class="pt-4">
+              <div>
+                <v-text-field
+                  label="E-mail address"
+                  v-model="email"
+                  required
+                  prepend-icon="mdi-account-circle"
+                ></v-text-field>
+                <v-text-field
+                  label="Password"
+                  v-model="password"
+                  min="8"
+                  counter
+                 :type="showPassword ? 'text' : 'password'"
+                  @keyup.enter="login"
+                  required
+                  prepend-inner-icon="mdi-lock"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="showPassword = !showPassword"
+                ></v-text-field>
+              </div>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn color="info" :loading="loading" text @click="login">Login</v-btn>
+               <v-btn text>Register</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 
 <script>
-import AuthenticationService from '@/services/AuthenticationService'
-
 export default {
   name: 'Login',
   data() {
-      return {
-          email: null,
-          password: null,
-          loading: false
-      }
+    return {
+      email: null,
+      password: null,
+      loading: false,
+      showPassword: false
+    };
   },
   methods: {
     async login() {
-        this.loading = true
+      this.loading = true;
 
-        setTimeout(async () => {
-        //      const response = await AuthenticationService.login({
-        //     email: this.email,
-        //     password: this.password
-        // })
-
+      setTimeout(async () => {
         await this.$store.dispatch('auth/signIn', {
           email: this.email,
-          password: this.password
-        })
-            // this.$store.dispatch('setToken', response.data.token)
-            // this.$store.dispatch('setUser', response.data.user)
-            this.loading = false
-
-            this.$router.push({name: 'products'})
-        }, 500)
-    }  
-  }
-}
+          password: this.password,
+        });
+        this.loading = false;
+        this.$router.push({ name: 'products' });
+      }, 500);
+    },
+  },
+};
 </script>
