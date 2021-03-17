@@ -33,13 +33,8 @@ const routes = [
     path: '/products',
     name: 'products',
     component: Products,
-    beforeEnter: (to, from, next) => {
-      if(!store.getters['auth/isUserLoggedIn']) {
-          return next({
-            name: 'login'
-          })
-      }
-      next()
+    meta: {
+      requiresAuth: true
     }
   }
 ]
@@ -48,6 +43,18 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+      if(!store.getters['auth/isUserLoggedIn']) {
+        return next({
+          name: 'login'
+        })
+      }
+     next()
+  }
+  next()
 })
 
 export default router

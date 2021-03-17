@@ -45,6 +45,10 @@ export default {
              return
            }
            // call to the me endpoint and grab user if fails set the user and token to null
+         },
+         logout({ commit }) {
+           commit('setToken', null)
+           location.reload()
          }
     }
 }

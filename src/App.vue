@@ -14,6 +14,7 @@
 
       <v-btn v-if="!$store.state.auth.isUserLoggedIn" text @click="$router.push({name: 'login'})">Login</v-btn>
       <v-btn v-if="!$store.state.auth.isUserLoggedIn" text @click="$router.push({name: 'register'})">Register</v-btn>
+      <v-btn v-if="$store.state.auth.isUserLoggedIn" text @click="$router.push('/products')">Products</v-btn>
       <v-btn v-if="$store.state.auth.isUserLoggedIn" text @click="logout">Logout</v-btn>
     
     </v-app-bar>
@@ -24,21 +25,16 @@
 </template>
 
 <script>
-
+import { mapActions } from 'vuex'
 export default {
   name: 'App',
   data: () => ({
     //
   }),
   methods: {
-    logout() {
-      this.$store.dispatch('auth/setToken', null)
-      this.$store.dispatch('auth/setUser', null)
-      //TODO: redirect to homepage
-      this.$router.push({
-        name: 'Home'
-      })
-    }
+    ...mapActions({
+      logout: 'auth/logout'
+    })
   }
 };
 </script>
