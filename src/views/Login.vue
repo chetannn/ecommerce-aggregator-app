@@ -1,8 +1,13 @@
 <template>
   <div>
-    <v-container fluid fill-height>
+     <v-snackbar :center="true" :timeout="3000" :top="true" color="error" v-model="snackbar">
+      {{ notificationMessage }}
+      <v-btn @click="snackbar = false" dark text>Close</v-btn>
+    </v-snackbar>
+
+    <v-container fill-height>
       <v-layout align-center justify-center>
-        <v-flex xs12 sm4 elevation-6>
+        <v-flex  xs12 sm4 elevation-6>
           <v-card>
             <v-card-title><h1 class="display-1">Login</h1></v-card-title>
             <v-divider></v-divider>
@@ -53,6 +58,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import {  required, minLength, email  } from 'vuelidate/lib/validators'
+import { mapActions } from 'vuex'
 
 export default {
   mixins: [validationMixin],
@@ -66,21 +72,33 @@ export default {
       email: null,
       password: null,
       loading: false,
-      showPassword: false
+      showPassword: false,
+      snackbar: false,
+      notificationMessage: ''
     };
   },
   methods: {
+    ...mapActions({
+      signIn: 'auth/signIn'
+    }),
     async login() {
       this.$v.$touch()
       if(this.$v.$invalid) return;
       this.loading = true
       setTimeout(async () => {
-        await this.$store.dispatch('auth/signIn', {
+        this.signIn({
           email: this.email,
           password: this.password,
+        }).then(() => {
+          this.loading = false
+          this.$router.replace({ name: 'products' })
         })
-        this.loading = false
-        this.$router.push({ name: 'products' })
+        .catch((e) => {
+          let res = e.response
+          this.notificationMessage = res.data.error
+          this.snackbar = true
+          this.loading = false
+        })
       }, 500)
     },
   },
@@ -103,3 +121,12 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+   .login-container {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     height: 100vh;
+   }
+</style>

@@ -45,6 +45,14 @@ export default {
              return
            }
            // call to the me endpoint and grab user if fails set the user and token to null
+           try {
+             let response = await AuthenticationService.me()
+             commit('setUser', response.data)
+           }
+           catch(e) {
+             commit('setToken', null)
+             commit('setUser', null)
+           }
          },
          logout({ commit }) {
            commit('setToken', null)

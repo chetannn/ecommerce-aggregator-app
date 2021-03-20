@@ -63,6 +63,7 @@
               </v-card>
             </v-flex>
           </v-layout> 
+
       </v-container>
   </div>
 </template>
@@ -120,13 +121,13 @@ export default {
     firstNameErrors() {
       const errors = []
       if(!this.$v.firstName.$dirty) return errors
-      !this.$v.firstName && errors.push('First Name is required')
+      !this.$v.firstName.required && errors.push('First Name is required')
       return errors
     },
      lastNameErrors() {
       const errors = []
       if(!this.$v.lastName.$dirty) return errors
-      !this.$v.lastName && errors.push('Last Name is required')
+      !this.$v.lastName.required && errors.push('Last Name is required')
       return errors
     }
   }

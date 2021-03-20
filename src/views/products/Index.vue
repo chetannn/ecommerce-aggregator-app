@@ -88,7 +88,17 @@
 </template>
 
 <script>
-export default {};
+import Api from '@/services/Api'
+export default {
+  mounted() {
+    // Api.get('/auth/me').then(res => {
+    //   console.log(res.data)
+    // })
+    // .catch(e => {
+    //   console.log(e.response)
+    // })
+  }
+};
 </script>
 
 <style>
