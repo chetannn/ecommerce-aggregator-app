@@ -13,12 +13,18 @@
                           v-model="firstName"
                           outlined
                           required
+                          :error-messages="firstNameErrors"
+                          @input="$v.firstName.$touch()"
+                          @blur="$v.firstName.$touch()"
                         ></v-text-field>
                         <v-text-field
                           label="Last Name"
                           v-model="lastName"
                           outlined
                           required
+                          :error-messages="lastNameErrors"
+                          @input="$v.lastName.$touch()"
+                          @blur="$v.lastName.$touch()"
                         ></v-text-field>
                         <v-text-field
                           label="E-mail address"
@@ -26,6 +32,9 @@
                           prepend-inner-icon="mdi-account-circle"
                           outlined
                           required
+                          :error-messages="emailErrors"
+                          @input="$v.email.$touch()"
+                          @blur="$v.email.$touch()"
                         ></v-text-field>
                         <v-text-field
                           label="Password"
@@ -38,6 +47,9 @@
                           :type="showPassword ? 'text' : 'password'"
                           outlined
                           required
+                          :error-messages="passwordErrors"
+                          @input="$v.password.$touch()"
+                          @blur="$v.password.$touch()"
                         ></v-text-field>
                         
                   </div>
@@ -57,9 +69,18 @@
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import { validationMixin } from 'vuelidate'
+import {  required, minLength, email  } from 'vuelidate/lib/validators'
 
 export default {
+  mixins: [validationMixin],
   name: 'Register',
+  validations: {
+    email: { required, minLength: minLength(4), email },
+    password: { required, minLength: minLength(6) },
+    firstName: { required },
+    lastName: { required },
+  },
   data() {
       return {
           email: null,
@@ -79,6 +100,35 @@ export default {
         })
         console.log(response.data)
     }  
+  },
+   computed: {
+    emailErrors() {
+      const errors = []
+      if(!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('Must be valid e-mail')
+      !this.$v.email.required && errors.push('Email is required')
+      return errors
+    },
+     passwordErrors() {
+      const errors = []
+      if (!this.$v.password.$dirty) return errors
+      !this.$v.password.minLength &&
+        errors.push('Password must be at least 6 characters long')
+       !this.$v.password.required && errors.push('Password is required')
+      return errors
+    },
+    firstNameErrors() {
+      const errors = []
+      if(!this.$v.firstName.$dirty) return errors
+      !this.$v.firstName && errors.push('First Name is required')
+      return errors
+    },
+     lastNameErrors() {
+      const errors = []
+      if(!this.$v.lastName.$dirty) return errors
+      !this.$v.lastName && errors.push('Last Name is required')
+      return errors
+    }
   }
 }
 </script>
