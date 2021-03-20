@@ -10,6 +10,9 @@ export default {
       getters: {
         isUserLoggedIn(state) {
             return state.isUserLoggedIn
+          },
+          user(state) {
+            return state.user
           }
       },
       mutations: {
@@ -41,13 +44,14 @@ export default {
            if(token) {
              commit('setToken', token)
            }
+           
            if(!state.token) {
              return
            }
-           // call to the me endpoint and grab user if fails set the user and token to null
+
            try {
              let response = await AuthenticationService.me()
-             commit('setUser', response.data)
+             commit('setUser', response.data.user)
            }
            catch(e) {
              commit('setToken', null)

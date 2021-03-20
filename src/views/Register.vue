@@ -1,5 +1,10 @@
 <template>
   <div>
+     <v-snackbar :center="true" :timeout="3000" :top="true" color="error" v-model="snackbar">
+      {{ notificationMessage }}
+      <v-btn @click="snackbar = false" dark text>Close</v-btn>
+    </v-snackbar>
+
       <v-container fluid fill-height>
           <v-layout align-center justify-center>
             <v-flex xs12 sm4 elevation-6>
@@ -57,7 +62,7 @@
                 <v-divider></v-divider>
             <v-card-actions>
               <v-spacer />
-              <v-btn color="info" text @click="register">Register</v-btn>
+              <v-btn color="info" :loading="loading" text @click="register">Register</v-btn>
                             
             </v-card-actions>
               </v-card>
@@ -88,18 +93,30 @@ export default {
           password: null,
           firstName: null,
           lastName: null,
-          showPassword: false
+          showPassword: false,
+          snackbar: false,
+          notificationMessage: '',
+          loading: false
       }
   },
   methods: {
     async register() {
-       const response = await AuthenticationService.register({
+      try {
+        this.loading = true
+        const response = await AuthenticationService.register({
             firstName: this.firstName,
             lastName: this.lastName,
             email: this.email,
             password: this.password
         })
-        console.log(response.data)
+        this.loading = false
+      }
+      catch(e) {
+           this.notificationMessage = e.response.data.error
+          this.snackbar = true
+          this.loading = false
+      }
+       
     }  
   },
    computed: {
