@@ -14,6 +14,9 @@
                   v-model="email"
                   required
                   outlined
+                  :error-messages="emailErrors"
+                  @input="$v.email.$touch()"
+                  @blur="$v.email.$touch()"
                   prepend-inner-icon="mdi-account-circle"
                 ></v-text-field>
                 <v-text-field
@@ -28,13 +31,16 @@
                   prepend-inner-icon="mdi-lock"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   @click:append="showPassword = !showPassword"
+                  :error-messages="passwordErrors"
+                  @input="$v.password.$touch()"
+                  @blur="$v.password.$touch()"
                 ></v-text-field>
               </div>
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
               <v-spacer />
-              <v-btn color="info" :loading="loading" text @click="login">Login</v-btn>
+              <v-btn :disabled="$v.$invalid" color="info" :loading="loading" text @click="login">Login</v-btn>
                <v-btn text>Register</v-btn>
             </v-card-actions>
           </v-card>
@@ -45,8 +51,16 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import {  required, minLength, email  } from 'vuelidate/lib/validators'
+
 export default {
+  mixins: [validationMixin],
   name: 'Login',
+  validations: {
+    email: { required, minLength: minLength(4), email },
+    password: { required, minLength: minLength(6) }
+  },
   data() {
     return {
       email: null,
@@ -57,8 +71,9 @@ export default {
   },
   methods: {
     async login() {
+      this.$v.$touch()
+      if(this.$v.$invalid) return;
       this.loading = true
-
       setTimeout(async () => {
         await this.$store.dispatch('auth/signIn', {
           email: this.email,
@@ -66,8 +81,25 @@ export default {
         })
         this.loading = false
         this.$router.push({ name: 'products' })
-      }, 500);
+      }, 500)
     },
   },
+  computed: {
+    emailErrors() {
+      const errors = []
+      if(!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('Must be valid e-mail')
+      !this.$v.email.required && errors.push('Email is required')
+      return errors
+    },
+     passwordErrors() {
+      const errors = []
+      if (!this.$v.password.$dirty) return errors
+      !this.$v.password.minLength &&
+        errors.push('Password must be at least 6 characters long')
+       !this.$v.password.required && errors.push('Password is required')
+      return errors
+    },
+  }
 };
 </script>
