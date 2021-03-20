@@ -62,7 +62,7 @@
                 <v-divider></v-divider>
             <v-card-actions>
               <v-spacer />
-              <v-btn color="info" :loading="loading" text @click="register">Register</v-btn>
+              <v-btn :disabled="$v.$invalid" color="info" :loading="loading" text @click="register">Register</v-btn>
                             
             </v-card-actions>
               </v-card>
@@ -102,14 +102,17 @@ export default {
   methods: {
     async register() {
       try {
-        this.loading = true
-        const response = await AuthenticationService.register({
+        this.loading = true 
+        this.$v.$touch()
+        if(this.$v.$invalid) return;
+        await AuthenticationService.register({
             firstName: this.firstName,
             lastName: this.lastName,
             email: this.email,
             password: this.password
         })
         this.loading = false
+        this.$router.push({ name: 'login' })
       }
       catch(e) {
            this.notificationMessage = e.response.data.error

@@ -44,9 +44,9 @@
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
+              <a style="text-decoration: none;" href="#">Forgot Password?</a>
               <v-spacer />
               <v-btn :disabled="$v.$invalid" color="info" :loading="loading" text @click="login">Login</v-btn>
-               <v-btn text>Register</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>
