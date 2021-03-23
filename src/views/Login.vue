@@ -40,7 +40,7 @@
             <v-card-actions>
               <a style="text-decoration: none;" href="#">Forgot Password?</a>
               <v-spacer />
-              <v-btn color="success" text>Register</v-btn>
+              <v-btn color="success" @click="$router.replace({ name: 'register' })" text>Register</v-btn>
               <v-btn :disabled="$v.$invalid" color="info" :loading="loading" text @click="login">Login</v-btn>
             </v-card-actions>
           </v-card>

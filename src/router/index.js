@@ -17,11 +17,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/register',
-    name: 'register',
-    component: Register
-  },
-  {
     path: '/auth',
     component: Auth,
     meta: {
@@ -31,6 +26,10 @@ const routes = [
       path: 'login',
       name: 'login',
       component: Login
+    }, {
+      path: 'register',
+      name: 'register',
+      component: Register
     }]
   },
   {
@@ -45,16 +44,16 @@ const routes = [
       path: 'products',
       name: 'products',
       component: Products
+    }, {
+      path: 'profile',
+      name: 'profile',
+      component: Profile,
+      meta: {
+        requiresAuth: true
+      }
     }]
   },
-  {
-    path: '/profile',
-    name: 'profile',
-    component: Profile,
-    meta: {
-      requiresAuth: true
-    }
-  }
+ 
 ]
 
 const router = new VueRouter({

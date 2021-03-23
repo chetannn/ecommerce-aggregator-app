@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+<div>
  <v-app-bar
       app
       color="primary"
@@ -11,14 +11,13 @@
       </div>
 
       <v-spacer></v-spacer>
-      <v-btn v-if="authenticated" text @click="$router.push('/products')">Products</v-btn>
+      <v-btn text @click="$router.push('/products')">Products</v-btn>
         <v-menu
       min-width="180"
       offset-y
       bottom
       left
-      nudge-bottom="10"
-      v-if="authenticated">
+      nudge-bottom="10">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
             class="mr-0"
@@ -34,8 +33,19 @@
           </v-btn>
         </template>
 
-         <v-list >
-          <div class="headline">{{ user.firstName}} {{ user.lastName}}</div>
+         <v-list>
+             <v-list-item>
+                <div class="headline">{{ user.firstName}} {{ user.lastName}}</div>
+             </v-list-item>
+
+          <v-list-item link to="/profile">
+              <v-list-item-action>
+              <v-icon>mdi-account-circle-outline</v-icon>
+            </v-list-item-action>
+              <v-list-item-content>
+                  Profile
+              </v-list-item-content>
+          </v-list-item>
 
 
            <div class="d-flex justify-center my-3">
@@ -51,11 +61,10 @@
          </v-list>
           </v-menu>
     </v-app-bar>
-
     <v-main>
       <router-view />
     </v-main>
-</v-app>
+ </div>
 </template>
 
 <script>
