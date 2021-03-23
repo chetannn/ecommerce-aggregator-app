@@ -1,14 +1,8 @@
 <template>
-  <div>
-     <v-snackbar :center="true" :timeout="3000" :top="true" color="error" v-model="snackbar">
-      {{ notificationMessage }}
-      <v-btn @click="snackbar = false" dark text>Close</v-btn>
-    </v-snackbar>
-
     <v-container fill-height>
-      <v-layout align-center justify-center>
-        <v-flex  xs12 sm4 elevation-6>
-          <v-card>
+      <v-row>
+          <v-col>
+          <v-card class="mx-auto" max-width="500">
             <v-card-title><h1 class="display-1">Login</h1></v-card-title>
             <v-divider></v-divider>
 
@@ -46,13 +40,13 @@
             <v-card-actions>
               <a style="text-decoration: none;" href="#">Forgot Password?</a>
               <v-spacer />
+              <v-btn color="success" text>Register</v-btn>
               <v-btn :disabled="$v.$invalid" color="info" :loading="loading" text @click="login">Login</v-btn>
             </v-card-actions>
           </v-card>
-        </v-flex>
-      </v-layout>
+          </v-col>
+      </v-row>
     </v-container>
-  </div>
 </template>
 
 <script>

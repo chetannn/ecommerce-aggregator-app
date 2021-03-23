@@ -4,12 +4,11 @@ export default {
     namespaced: true,
     state: () => ({
         token: null,
-        user: null,
-        isUserLoggedIn: false
+        user: null
       }),
       getters: {
-        isUserLoggedIn(state) {
-            return state.isUserLoggedIn
+        authenticated(state) {
+            return state.token && state.user
           },
           user(state) {
             return state.user
@@ -18,12 +17,6 @@ export default {
       mutations: {
         setToken(state, token) {
             state.token = token
-            if(token) {
-              state.isUserLoggedIn = true
-            }
-            else {
-              state.isUserLoggedIn = false
-            }
           },
           setUser(state, user) {
             state.user = user

@@ -1,19 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
+import Auth from '../components/layouts/Auth.vue'
+import Default from '../components/layouts/Default.vue'
+import Profile from '../views/profile/Index.vue'
 import Products from '../views/products/Index.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
   {
     path: '/about',
     name: 'About',
@@ -25,14 +22,35 @@ const routes = [
     component: Register
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login
+    path: '/auth',
+    component: Auth,
+    meta: {
+      title: 'Login'
+    },
+    children: [{
+      path: 'login',
+      name: 'login',
+      component: Login
+    }]
   },
   {
-    path: '/products',
-    name: 'products',
-    component: Products,
+    path: '/',
+    name: 'home',
+    component: Default,
+    redirect: '/products',
+    meta: {
+      requiresAuth: true
+    },
+    children: [{
+      path: 'products',
+      name: 'products',
+      component: Products
+    }]
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: Profile,
     meta: {
       requiresAuth: true
     }
@@ -47,7 +65,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
-      if(!store.getters['auth/isUserLoggedIn']) {
+      if(!store.getters['auth/authenticated']) {
         return next({
           name: 'login'
         })

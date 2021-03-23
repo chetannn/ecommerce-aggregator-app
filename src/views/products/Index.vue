@@ -1,5 +1,4 @@
 <template>
-  <div>
     <v-layout>
       <v-container>
         <v-card class="mb-4"> 
@@ -39,11 +38,11 @@
       </v-row>
       </v-container>
     </v-layout>
-  </div>
 </template>
 
 <script>
 import Api from '@/services/Api'
+
 export default {
   mounted() {
   },
