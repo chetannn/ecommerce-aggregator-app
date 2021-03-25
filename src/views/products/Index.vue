@@ -10,14 +10,67 @@
       <v-row>
         <v-col cols="12" md="4"> 
             <v-card>
-              <v-list>
-                 <v-subheader>REPORTS</v-subheader>
+              <v-list class="px-0 py-0">
+                 <v-subheader>Filters</v-subheader>
+                  <v-list-item>
+                      <v-list-item-content>
+                        <v-checkbox label="Samsung"></v-checkbox>
+                      </v-list-item-content>
+                  </v-list-item>
+                   <v-list-item>
+                      <v-list-item-content>
+                        <v-checkbox label="Apple"></v-checkbox>
+                      </v-list-item-content>
+                  </v-list-item>
+                   <v-list-item>
+                      <v-list-item-content>
+                        <v-checkbox label="OnePlus"></v-checkbox>
+                      </v-list-item-content>
+                  </v-list-item>
+
+                  <v-divider></v-divider>
+
+                    <v-list>
+                      <v-subheader>Price</v-subheader>
+                    <v-list-item>
+                      <v-list-item-content>
+                         <v-row>
+                           <v-col cols="12" md="5">
+                             <v-text-field type="number" outlined label="Min"></v-text-field>
+                           </v-col>
+                           <v-col cols="12" md="5">
+                             <v-text-field type="number" outlined label="Max"></v-text-field>
+                           </v-col>
+
+                            <v-col cols="12" md="2">
+                             <v-btn class="align-items-center" icon>
+                               <v-icon>mdi-magnify</v-icon>
+                             </v-btn>
+                           </v-col>
+
+                         </v-row>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+
+                  <v-divider />
+
+                  <v-list>
+                      <v-subheader>Source</v-subheader>
+                      <v-list-item>
+                        <v-list-item-content>
+                          <v-autocomplete outlined label="Select Source" :items="[{ text: 'Daraz' }, { text: 'Sastodeal' }]"></v-autocomplete>
+                        </v-list-item-content>
+                      </v-list-item>
+                  </v-list>
+
+
                  </v-list>
             </v-card>
            </v-col>
         <v-col cols="12" md="8">
           <v-row>
-            <v-col :key="product.id" v-for="product in products" cols="12" md="4">
+            <v-col :key="product.id" v-for="product in products" cols="12" md="6">
               <v-card :to="product.productLink" exact class="mx-auto" max-width="400">
                 <v-img
                   src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"

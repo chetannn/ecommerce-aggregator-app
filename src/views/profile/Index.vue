@@ -13,47 +13,18 @@
                     <v-form>
             <v-container class="py-0">
               <v-row>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Company (disabled)"
-                    disabled
-                    outlined
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    label="User Name"
-                    outlined
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Email Address"
-                    class="purple-input"
-                    outlined
-                  />
-                </v-col>
-
-                <v-col
+                 <v-col
                   cols="12"
                   md="6"
                 >
                   <v-text-field
+                  v-model="firstName"
                     label="First Name"
                     class="purple-input"
                     outlined
+                    :error-messages="firstNameErrors"
+                    @input="$v.firstName.$touch()"
+                    @blur="$v.firstName.$touch()"
                   />
                 </v-col>
 
@@ -62,51 +33,28 @@
                   md="6"
                 >
                   <v-text-field
+                    v-model="lastName"
                     label="Last Name"
                     class="purple-input"
                     outlined
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-text-field
-                    label="Address"
-                    class="purple-input"
-                    outlined
+                    :error-messages="lasttNameErrors"
+                    @input="$v.lastName.$touch()"
+                    @blur="$v.lastName.$touch()"
                   />
                 </v-col>
 
                 <v-col
                   cols="12"
-                  md="4"
+                  md="6"
                 >
                   <v-text-field
-                    label="City"
+                    v-model="email"
+                    label="Email Address"
                     class="purple-input"
                     outlined
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Country"
-                    class="purple-input"
-                    outlined
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    label="Postal Code"
-                    type="number"
-                    outlined
+                    :error-messages="emailErrors"
+                    @input="$v.email.$touch()"
+                    @blur="$v.email.$touch()"
                   />
                 </v-col>
 
@@ -114,7 +62,6 @@
                   <v-textarea
                     class="purple-input"
                     label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
                     outlined
                   />
                 </v-col>
@@ -125,7 +72,9 @@
                 >
                   <v-btn
                     color="success"
+                    @click="save"
                     class="mr-0"
+                    :loading="loading"
                   >
                     Update Profile
                   </v-btn>
@@ -150,15 +99,14 @@
                  </div>
                  <v-card-text class="text-center">
                       <h6 class="display-1 mb-1 grey--text">
-              CEO / CO-FOUNDER
             </h6>
 
             <h4 class="display-2 font-weight-light mb-3 black--text">
-              Alec Thompson
+              {{ userInfo.firstName }} {{ userInfo.lastName }}
             </h4>
 
             <p class="font-weight-light grey--text">
-              Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+               {{ userInfo.email }}
             </p>
 
              <v-btn
@@ -177,6 +125,84 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { validationMixin } from 'vuelidate'
+import {  required, minLength, email  } from 'vuelidate/lib/validators'
+import UserService from '@/services/UserService'
+
+export default {
+  mixins: [validationMixin],
+  validations: {
+    email: { required, minLength: minLength(4), email },
+    password: { required, minLength: minLength(6) },
+    firstName: { required },
+    lastName: { required },
+  },
+    data() {
+        return {
+           firstName: '',
+           lastName: '',
+           email: '',
+           loading: false
+        }
+    },
+    mounted() {
+        const { firstName, lastName, email } = this.userInfo
+        this.firstName = firstName
+        this.lastName = lastName
+        this.email = email
+    },
+    methods: {
+        save() {
+            this.loading = true
+            const user = {
+              firstName: this.firstName,
+              lastName: this.lastName,
+              email: this.email
+            }
+            UserService.updateProfile(user)
+            .then(res => {
+               if(res.status === 200) {
+                 this.loading = false
+                 location.reload()
+               }
+            })
+        }
+    },
+    computed: {
+      ...mapGetters({
+        userInfo: 'auth/user'
+      }),
+      emailErrors() {
+      const errors = []
+      if(!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('Must be valid e-mail')
+      !this.$v.email.required && errors.push('Email is required')
+      return errors
+    },
+     passwordErrors() {
+      const errors = []
+      if (!this.$v.password.$dirty) return errors
+      !this.$v.password.minLength &&
+        errors.push('Password must be at least 6 characters long')
+       !this.$v.password.required && errors.push('Password is required')
+      return errors
+    },
+    firstNameErrors() {
+      const errors = []
+      if(!this.$v.firstName.$dirty) return errors
+      !this.$v.firstName.required && errors.push('First Name is required')
+      return errors
+    },
+     lastNameErrors() {
+      const errors = []
+      if(!this.$v.lastName.$dirty) return errors
+      !this.$v.lastName.required && errors.push('Last Name is required')
+      return errors
+    }
+
+    }
+}
 
 </script>
 
