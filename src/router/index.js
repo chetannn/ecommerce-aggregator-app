@@ -6,6 +6,8 @@ import Auth from '../components/layouts/Auth.vue'
 import Default from '../components/layouts/Default.vue'
 import Profile from '../views/profile/Index.vue'
 import Products from '../views/products/Index.vue'
+import Admin from '@/components/layouts/Admin.vue'
+import Dashboard from '@/views/admin/Dashboard.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -53,6 +55,16 @@ const routes = [
       }
     }]
   },
+  {
+    path: '/admin',
+    redirect: '/dashboard',
+    component: Admin,
+    children: [{
+      path: 'dashboard',
+      name: 'dashboard',
+      component: Dashboard
+    }]
+  }
  
 ]
 
