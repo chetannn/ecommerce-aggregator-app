@@ -1,12 +1,12 @@
 <template>
     <v-layout>
       <v-container>
-        <v-card class="mb-4"> 
+        <!-- <v-card class="mb-4"> 
           <v-card-text>
         <v-text-field label="Search" append-icon="mdi-magnify" outlined>
         </v-text-field>
           </v-card-text>
-        </v-card>
+        </v-card> -->
       <v-row>
         <v-col cols="12" md="4"> 
             <v-card>
@@ -59,7 +59,7 @@
                       <v-subheader>Source</v-subheader>
                       <v-list-item>
                         <v-list-item-content>
-                          <v-autocomplete outlined label="Select Source" :items="[{ text: 'Daraz' }, { text: 'Sastodeal' }]"></v-autocomplete>
+                          <v-autocomplete outlined label="Select Source" item-text="name" item-value="id" :items="sources"></v-autocomplete>
                         </v-list-item-content>
                       </v-list-item>
                   </v-list>
@@ -100,6 +100,7 @@
 
 <script>
 import ProductService from '@/services/ProductService'
+import SourceService from '@/services/SourceService'
 
 export default {
   async mounted() {
@@ -108,6 +109,14 @@ export default {
        this.totalPages = response.data.data.totalPages
        this.currentPage = response.data.data.currentPage
        this.products = response.data.data.items
+
+      const res = await Promise.all([
+          await SourceService.all({})
+       ])
+
+       this.sources = res[0].data.data.items
+
+
      }
      catch (e) {
 
@@ -116,6 +125,7 @@ export default {
   data() {
     return {
       products: [],
+      sources: [],
       currentPage: 0,
       totalPages: 0
     }
@@ -127,6 +137,7 @@ export default {
        this.totalPages = response.data.data.totalPages
        this.currentPage = response.data.data.currentPage
        this.products = response.data.data.items
+       this.$vuetify.goTo(0)
     }
   }
 };
