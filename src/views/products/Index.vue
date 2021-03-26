@@ -88,7 +88,12 @@
             </v-col>
           </v-row>
         </v-col>
+
+        <v-col cols="12" md="12">
+          <v-pagination @input="handlePageChange" circle v-model="currentPage" :length="totalPages"></v-pagination>
+        </v-col>
       </v-row>
+       
       </v-container>
     </v-layout>
 </template>
@@ -99,8 +104,10 @@ import ProductService from '@/services/ProductService'
 export default {
   async mounted() {
      try {
-       const response = await ProductService.all()
-       this.products = response.data.data
+       const response = await ProductService.all({})
+       this.totalPages = response.data.data.totalPages
+       this.currentPage = response.data.data.currentPage
+       this.products = response.data.data.items
      }
      catch (e) {
 
@@ -108,7 +115,18 @@ export default {
   },
   data() {
     return {
-      products: []
+      products: [],
+      currentPage: 0,
+      totalPages: 0
+    }
+  },
+  methods: {
+    async handlePageChange(value) {
+      this.currentPage = value
+      const response = await ProductService.all({ perPage: 5, page: this.currentPage })
+       this.totalPages = response.data.data.totalPages
+       this.currentPage = response.data.data.currentPage
+       this.products = response.data.data.items
     }
   }
 };
