@@ -37,7 +37,7 @@
                     label="Last Name"
                     class="purple-input"
                     outlined
-                    :error-messages="lasttNameErrors"
+                    :error-messages="lastNameErrors"
                     @input="$v.lastName.$touch()"
                     @blur="$v.lastName.$touch()"
                   />
@@ -88,15 +88,29 @@
 
          <v-col cols="12" md="4">
              <v-card>
-                 <div class="d-flex grow flex-wrap">
+                 <div style="cursor:pointer;" @click="launchFilePicker()">
+                        <div class="d-flex grow flex-wrap">
                         <v-avatar
                         size="128"
                         class="mx-auto v-card__avatar elevation-6"
-                        color="grey"
+                        color="primary"
+                        v-if="!imageUrl"
+                        
                         >
-                          <v-img src="https://cdn.vuetifyjs.com/images/john.jpg" />
+                          <span style="color: white;">Click to add an avatar</span>
                         </v-avatar>
+
+                        <v-avatar size="128" v-ripple v-else class="mb-3">
+                          <img :src="imageUrl" alt="avatar">
+                       </v-avatar>
+                        </div>
                  </div>
+                  <input type="file"
+       ref="file"
+       :name="uploadFieldName"
+       @change="onFileChange(
+          $event.target.name, $event.target.files)"
+       style="display:none">
                  <v-card-text class="text-center">
                       <h6 class="display-1 mb-1 grey--text">
             </h6>
@@ -109,13 +123,13 @@
                {{ userInfo.email }}
             </p>
 
-             <v-btn
+             <!-- <v-btn
               color="success"
               rounded
               class="mr-0"
             >
               Follow
-            </v-btn>
+            </v-btn> -->
 
                  </v-card-text>
              </v-card>
@@ -143,7 +157,14 @@ export default {
            firstName: '',
            lastName: '',
            email: '',
-           loading: false
+           loading: false,
+           file: null,
+           selectedFile: null,
+           maxSize: 1024,
+           errorDialog: null,
+           errorText: '',
+           uploadFieldName: 'file',
+           imageUrl: null
         }
     },
     mounted() {
@@ -167,7 +188,44 @@ export default {
                  location.reload()
                }
             })
+        },
+        selectFile(file) {
+            this.file = file
+            UserService.uploadAvatar(this.file)
+        },
+        launchFilePicker(){
+        this.$refs.file.click()
+      },
+        onFileChange(fieldName, file) {
+        const { maxSize } = this
+        let imageFile = file[0] 
+ 
+        //check if user actually selected a file
+        if (file.length>0) {
+          let size = imageFile.size / maxSize / maxSize
+          if (!imageFile.type.match('image.*')) {
+            // check whether the upload is an image
+            this.errorDialog = true
+            this.errorText = 'Please choose an image file'
+          } else if (size>1) {
+            // check whether the size is greater than the size limit
+            this.errorDialog = true
+            this.errorText = 'Your file is too big! Please select an image under 1MB'
+          } else {
+            // Append file into FormData & turn file into image URL
+            let formData = new FormData()
+            let imageURL = URL.createObjectURL(imageFile)
+            formData.append('avatar', imageFile)
+            // Emit FormData & image URL to the parent component
+            // this.$emit('input', { formData, imageURL })
+            this.imageUrl = imageURL
+             
+             UserService.uploadAvatar(formData)
+
+          }
         }
+      }
+
     },
     computed: {
       ...mapGetters({

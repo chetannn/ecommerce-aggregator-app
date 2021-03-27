@@ -6,5 +6,12 @@ export default {
     },
     updateProfile(userInfo) {
         return Api.put('profile/update', userInfo)
+    },
+    uploadAvatar(formData) {
+        return Api.post('/profile/avatar', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 }
