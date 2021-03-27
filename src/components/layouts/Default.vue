@@ -26,7 +26,7 @@
             v-on="on">
             <v-avatar size="40">
               <img
-        src="https://cdn.vuetifyjs.com/images/john.jpg"
+         :src="profilePath"
         alt="John"
        > 
        </v-avatar>
@@ -80,7 +80,10 @@ export default {
     ...mapGetters({
       user: 'auth/user',
       authenticated: 'auth/authenticated'
-    })
+    }),
+    profilePath() {
+      return `http://localhost:3000${this.user.profilePath}`
+    }
   }
 }
 </script>

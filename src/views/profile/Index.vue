@@ -172,6 +172,8 @@ export default {
         this.firstName = firstName
         this.lastName = lastName
         this.email = email
+        console.log(this.$store.getters['auth/user'].profilePath)
+        this.imageUrl = 'http://localhost:3000' + this.$store.getters['auth/user'].profilePath
     },
     methods: {
         save() {
@@ -215,7 +217,7 @@ export default {
             // Append file into FormData & turn file into image URL
             let formData = new FormData()
             let imageURL = URL.createObjectURL(imageFile)
-            formData.append('avatar', imageFile)
+            formData.append('file', imageFile)
             // Emit FormData & image URL to the parent component
             // this.$emit('input', { formData, imageURL })
             this.imageUrl = imageURL
