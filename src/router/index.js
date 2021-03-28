@@ -10,6 +10,7 @@ import Admin from '@/components/layouts/Admin.vue'
 import Dashboard from '@/views/admin/dashboard/Dashboard.vue'
 import Sources from '@/views/admin/source/Index.vue'
 import Users from '@/views/admin/user/Index.vue'
+import LoginExp from '@/views/LoginExperimental.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -34,6 +35,10 @@ const routes = [
       path: 'register',
       name: 'register',
       component: Register
+    }, {
+      path: 'loginExp',
+      name: 'loginExp',
+      component: LoginExp
     }]
   },
   {
