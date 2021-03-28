@@ -106,9 +106,6 @@
 
     </template>
 
-    <!-- <template v-slot[`item.createdAt`]="{ item }">
-                {{ new Date(item.createdAt).toLocaleString("en-US", { year: 'numeric', month: 'numeric', day: 'numeric' }) }}
-    </template> -->
 
     <template v-slot:[`item.status`]="{ item }">
                 <v-chip
@@ -118,6 +115,10 @@
                 </v-chip>
               </template>
 
+              <template v-slot:[`item.createdAt`]="{ item }">
+                 {{ formatDate(item.createdAt) }}
+              </template>
+
               <template v-slot:[`item.isAdmin`]="{ item }">
                  {{ item.isAdmin ? 'admin' : 'user' }}
               </template>
@@ -125,9 +126,25 @@
       </v-card>
 
       <v-dialog persistent v-model="dialog" max-width="400">
-           <v-card>
-               <v-card-title class="headline mb-2">Add User</v-card-title>
+           <v-card >
+               <v-card-title class="white--text headline primary">
+                 Add User
+
+                 <v-spacer />
+                  <v-btn icon text color="white" @click="dialog=false">
+                              <v-icon>mdi-close</v-icon>
+                            </v-btn>
+                 </v-card-title>
                
+                <div class="py-6 blue-grey lighten-4 text-center mb-2">
+                          <v-avatar size="100" class="grey lighten-4">
+                            <!-- <v-img
+                              :src="require('@/assets/images/users' + form.avatar)"
+                              alt="avatar"
+                            ></v-img> -->
+                          </v-avatar>
+                        </div>
+
                <v-card-text>
                 <v-text-field outlined label="First Name"></v-text-field>
                 <v-text-field outlined label="Last Name"></v-text-field>
@@ -146,12 +163,13 @@
 
 <script>
 import UserService from '@/services/UserService'
+import moment from 'moment'
 
 export default {
     data() {
         return {
             headers: [
-                {text: 'Profile', value: 'profilePath'},
+                {text: 'Profile', value: 'profilePath', sortable: false},
                 { text: 'First Name', value: 'firstName' },
                 { text: 'Last Name', value: 'lastName' },
                 { text: 'Email', value: 'email' },
@@ -173,6 +191,11 @@ export default {
                 this.loading = false
             }
         })
+    },
+    methods: {
+       formatDate(date) {
+        return moment(date).format('LLL')
+      }
     }
 }
 </script>

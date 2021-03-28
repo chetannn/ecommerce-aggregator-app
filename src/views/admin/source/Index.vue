@@ -81,6 +81,15 @@
       </v-btn>
 
     </template>
+
+    <template v-slot:[`item.status`]="{ item }">
+                <v-chip
+                  color="primary"
+                  small>
+                   Active
+                </v-chip>
+              </template>
+
       </v-data-table>
       </v-card>
   </v-container>
@@ -96,6 +105,7 @@ export default {
                 { text: 'Name', value: 'name' },
                 { text: 'Url', value: 'url' },
                 { text: 'Created At', value: 'createdAt' },
+                { text: 'Status', value: 'status' },
                 { text: 'Actions', value: 'actions' }
             ],
             sources: [],
