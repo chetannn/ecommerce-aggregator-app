@@ -7,7 +7,9 @@ import Default from '../components/layouts/Default.vue'
 import Profile from '../views/profile/Index.vue'
 import Products from '../views/products/Index.vue'
 import Admin from '@/components/layouts/Admin.vue'
-import Dashboard from '@/views/admin/Dashboard.vue'
+import Dashboard from '@/views/admin/dashboard/Dashboard.vue'
+import Sources from '@/views/admin/source/Index.vue'
+import Users from '@/views/admin/user/Index.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -63,6 +65,14 @@ const routes = [
       path: 'dashboard',
       name: 'dashboard',
       component: Dashboard
+    }, {
+      path: 'source',
+      name: 'source',
+      component: Sources
+    }, {
+      path: 'users',
+      name: 'users',
+      component: Users
     }]
   }
  

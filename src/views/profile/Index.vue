@@ -172,8 +172,8 @@ export default {
         this.firstName = firstName
         this.lastName = lastName
         this.email = email
-        console.log(this.$store.getters['auth/user'].profilePath)
-        this.imageUrl = 'http://localhost:3000' + this.$store.getters['auth/user'].profilePath
+        if(this.$store.getters['auth/user'].profilePath)
+          this.imageUrl = 'http://localhost:3000' + this.$store.getters['auth/user'].profilePath
     },
     methods: {
         save() {
