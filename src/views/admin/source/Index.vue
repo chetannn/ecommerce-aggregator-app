@@ -82,6 +82,10 @@
 
     </template>
 
+    <template v-slot:[`item.createdAt`]="{ item }">
+                 {{ formatDate(item.createdAt) }}
+              </template>
+
     <template v-slot:[`item.status`]="{ item }">
                 <v-chip
                   color="primary"
@@ -97,6 +101,7 @@
 
 <script>
 import SourceService from '@/services/SourceService'
+import moment from 'moment'
 
 export default {
     data() {
@@ -118,6 +123,11 @@ export default {
            this.sources =  res.data.data.items
            this.loading = false
         })
+    },
+     methods: {
+       formatDate(date) {
+        return moment(date).format('LLL')
+      }
     }
 }
 </script>

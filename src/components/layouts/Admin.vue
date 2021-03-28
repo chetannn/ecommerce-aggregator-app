@@ -60,12 +60,14 @@
             icon
             v-bind="attrs"
             v-on="on">
-            <v-avatar size="40">
+            <v-avatar v-if="user.profilePath" size="40">
               <img
         :src="profilePath"
-        alt="John"
-       > 
+        :alt="user.firstName"
+          >
        </v-avatar>
+
+           <v-avatar v-else size="40">{{ user.firstName }}</v-avatar>
           </v-btn>
         </template>
 
@@ -141,8 +143,7 @@ export default {
         links: [
       { icon: 'mdi-view-dashboard-outline', text: 'Dashboard', route: '/admin/dashboard' },
       { icon: 'mdi-folder-outline', text: 'Sources', route: '/admin/source' },
-      { icon: 'mdi-account-circle-outline', text: 'User Management', route: '/admin/users' },
-      { icon: 'mdi-wrench-outline', text: 'Settings', route: '/settings' }
+      { icon: 'mdi-account-circle-outline', text: 'User Management', route: '/admin/users' }
     ],
      notifications: [
         { text: 'Check out this awesome ticket', icon: 'mdi-tag', color: 'warning' },

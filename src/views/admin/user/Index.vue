@@ -125,7 +125,7 @@
       </v-data-table>
       </v-card>
 
-      <v-dialog persistent v-model="dialog" max-width="400">
+      <v-dialog persistent v-model="dialog" max-width="450">
            <v-card >
                <v-card-title class="white--text headline primary">
                  Add User
@@ -137,11 +137,12 @@
                  </v-card-title>
                
                 <div class="py-6 blue-grey lighten-4 text-center mb-2">
-                          <v-avatar size="100" class="grey lighten-4">
+                          <v-avatar size="128" class="grey lighten-4">
                             <!-- <v-img
                               :src="require('@/assets/images/users' + form.avatar)"
                               alt="avatar"
                             ></v-img> -->
+                             <span>Click to add an avatar</span>
                           </v-avatar>
                         </div>
 

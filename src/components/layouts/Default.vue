@@ -24,12 +24,18 @@
             icon
             v-bind="attrs"
             v-on="on">
-            <v-avatar size="40">
+            <v-avatar v-if="user.profilePath" size="40">
               <img
          :src="profilePath"
-        alt="John"
+        :alt="user.firstName"
        > 
        </v-avatar>
+
+         <v-avatar color="primary" v-else>
+              <v-icon dark>
+              mdi-account-circle
+            </v-icon>
+         </v-avatar>
           </v-btn>
         </template>
 
