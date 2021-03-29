@@ -147,15 +147,16 @@
                         </div>
 
                <v-card-text>
-                <v-text-field outlined label="First Name"></v-text-field>
-                <v-text-field outlined label="Last Name"></v-text-field>
-                <v-text-field outlined label="Email"></v-text-field>
+                <v-text-field v-model="form.firstName" outlined label="First Name"></v-text-field>
+                <v-text-field v-model="form.lastName" outlined label="Last Name"></v-text-field>
+                <v-text-field v-model="form.email" outlined label="Email"></v-text-field>
+                <v-switch v-model="form.isAdmin" label="Admin" inset></v-switch>
                </v-card-text>
 
                <v-card-actions>
                    <v-spacer />
                    <v-btn text @click="dialog = false">Close</v-btn>
-                   <v-btn text color="primary">Save</v-btn>
+                   <v-btn @click="save" text color="primary">Save</v-btn>
                </v-card-actions>
            </v-card>
       </v-dialog>
@@ -177,11 +178,18 @@ export default {
                 { text: 'Role', value: 'isAdmin' },
                 { text: 'Status', value: 'status' },
                 { text: 'Created At', value: 'createdAt' },
-                { text: 'Actions', value: 'actions' }
+                { text: 'Actions', value: 'actions', sortable: false }
             ],
             users: [],
             loading: false,
-            dialog: false
+            dialog: false,
+            form: {
+              firstName: '',
+              lastName: '',
+              email: '',
+              isAdmin: false,
+              profilePath: ''
+            }
         }
     },
     mounted() {
@@ -196,6 +204,9 @@ export default {
     methods: {
        formatDate(date) {
         return moment(date).format('LLL')
+      },
+      save() {
+        console.log(this.form)
       }
     }
 }

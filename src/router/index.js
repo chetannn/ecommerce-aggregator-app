@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Register from '../views/Register.vue'
+import RegisterExperimental from '../views/RegisterExperimental.vue'
 import Login from '../views/Login.vue'
-import Auth from '../components/layouts/Auth.vue'
+import Auth2 from '../components/layouts/Auth2.vue'
 import Default from '../components/layouts/Default.vue'
 import Profile from '../views/profile/Index.vue'
 import Products from '../views/products/Index.vue'
@@ -23,18 +23,18 @@ const routes = [
   },
   {
     path: '/auth',
-    component: Auth,
+    component: Auth2,
     meta: {
       title: 'Login'
     },
     children: [{
       path: 'login',
       name: 'login',
-      component: Login
+      component: LoginExp
     }, {
       path: 'register',
       name: 'register',
-      component: Register
+      component: RegisterExperimental
     }, {
       path: 'loginExp',
       name: 'loginExp',
