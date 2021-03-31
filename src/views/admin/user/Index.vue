@@ -96,7 +96,7 @@
       </v-icon>
             </v-btn>
 
-      <v-btn class="ml-2 error" dark icon>      
+      <v-btn @click="deleteUser(item)" class="ml-2 error" dark icon>      
       <v-icon
         small
       >
@@ -125,7 +125,7 @@
       </v-data-table>
       </v-card>
 
-      <v-dialog persistent v-model="dialog" max-width="450">
+      <v-dialog persistent v-model="dialog" max-width="500">
            <v-card >
                <v-card-title class="white--text headline primary">
                  Add User
@@ -150,6 +150,7 @@
                 <v-text-field v-model="form.firstName" outlined label="First Name"></v-text-field>
                 <v-text-field v-model="form.lastName" outlined label="Last Name"></v-text-field>
                 <v-text-field v-model="form.email" outlined label="Email"></v-text-field>
+                 <v-text-field type="password" v-model="form.password" outlined label="Password"></v-text-field>
                 <v-switch v-model="form.isAdmin" label="Admin" inset></v-switch>
                </v-card-text>
 
@@ -165,7 +166,9 @@
 
 <script>
 import UserService from '@/services/UserService'
+import AuthenticationService from '@/services/AuthenticationService'
 import moment from 'moment'
+import { mapMutations } from 'vuex'
 
 export default {
     data() {
@@ -187,26 +190,53 @@ export default {
               firstName: '',
               lastName: '',
               email: '',
+              password: '',
               isAdmin: false,
               profilePath: ''
             }
         }
     },
     mounted() {
+        this.all()
+    },
+    methods: {
+       ...mapMutations({
+          setSnackbar: 'snackbar/setSnackbar'
+       }),
+       formatDate(date) {
+        return moment(date).format('LLL')
+      },
+      all() {
         this.loading = true
-        UserService.all().then((res) => {
+         UserService.all().then((res) => {
             if(res.status === 200) {
                 this.users = res.data.users
                 this.loading = false
             }
         })
-    },
-    methods: {
-       formatDate(date) {
-        return moment(date).format('LLL')
       },
       save() {
-        console.log(this.form)
+        AuthenticationService.register(this.form).then((res) => {
+          if(res.status === 201) {
+            this.dialog = false
+            this.setSnackbar({
+              message: 'User Registered Successfully!',
+              color: 'success'
+            })
+            this.all()
+          }
+        })
+      },
+      deleteUser(user) {
+        UserService.deleteUser(user.id).then(res => {
+          if(res.status === 200) {
+            this.setSnackbar({
+              message: res.data.message,
+              color: 'success'
+            })
+            this.all()
+          }
+        })
       }
     }
 }

@@ -13,5 +13,8 @@ export default {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    deleteUser(id) {
+        return Api.delete(`users/${id}`)
     }
 }

@@ -130,6 +130,13 @@
     <v-main>
       <router-view />
     </v-main>
+
+    <v-snackbar 
+    top center 
+    v-model="$store.state.snackbar.show" 
+    :color="snackbarColor"
+    timeout="3000"
+    >{{ snackbarText }}</v-snackbar>
   </v-app>
 </template>
 
@@ -157,7 +164,9 @@ export default {
    computed: {
     ...mapGetters({
       user: 'auth/user',
-      authenticated: 'auth/authenticated'
+      authenticated: 'auth/authenticated',
+      snackbarText: 'snackbar/snackbarText',
+      snackbarColor: 'snackbar/color'
     }),
     profilePath() {
       return `http://localhost:3000${this.user.profilePath}`
