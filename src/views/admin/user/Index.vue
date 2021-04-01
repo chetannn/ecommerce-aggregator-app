@@ -41,7 +41,7 @@
           <v-col cols="12" md="4">
               <v-card>
                   <v-card-title>Total</v-card-title>
-                  <v-card-text class="headline">30</v-card-text>
+                  <v-card-text class="headline">{{ stats.total }}</v-card-text>
               </v-card>
           </v-col>
 
@@ -184,6 +184,7 @@ export default {
                 { text: 'Actions', value: 'actions', sortable: false }
             ],
             users: [],
+            stats: [],
             loading: false,
             dialog: false,
             form: {
@@ -197,6 +198,9 @@ export default {
         }
     },
     mounted() {
+         UserService.stats().then(res => {
+          this.stats = res.data.data[0]
+        })
         this.all()
     },
     methods: {

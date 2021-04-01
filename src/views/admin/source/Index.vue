@@ -41,7 +41,7 @@
           <v-col cols="12" md="4">
               <v-card>
                   <v-card-title>Total</v-card-title>
-                  <v-card-text class="headline">20</v-card-text>
+                  <v-card-text class="headline">{{ stats.total }}</v-card-text>
               </v-card>
           </v-col>
 
@@ -96,6 +96,10 @@
 
       </v-data-table>
       </v-card>
+
+      <v-card class="mt-4">
+        <v-data-table :items="sources" :loading="loading" :headers="headers"></v-data-table>
+      </v-card>
   </v-container>
 </template>
 
@@ -114,11 +118,15 @@ export default {
                 { text: 'Actions', value: 'actions' }
             ],
             sources: [],
+            stats: [],
             loading: false
         }
     },
     mounted() {
         this.loading = true
+        SourceService.stats().then(res => {
+          this.stats = res.data.data[0]
+        })
         SourceService.all({}).then(res => {
            this.sources =  res.data.data.items
            this.loading = false
