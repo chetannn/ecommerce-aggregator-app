@@ -98,13 +98,14 @@
       </v-card>
 
       <v-card class="mt-4">
-        <v-data-table :items="sources" :loading="loading" :headers="headers"></v-data-table>
+        <v-data-table :items="categoryLinks" :loading="loading" :headers="categoryLinkHeaders"></v-data-table>
       </v-card>
   </v-container>
 </template>
 
 <script>
 import SourceService from '@/services/SourceService'
+import CategoryLinkService from '@/services/CategoryLinkService'
 import moment from 'moment'
 
 export default {
@@ -117,7 +118,13 @@ export default {
                 { text: 'Status', value: 'status' },
                 { text: 'Actions', value: 'actions' }
             ],
+            categoryLinkHeaders: [
+               { text: 'Source', value: 'sourceId' },
+               { text: 'Link', value: 'link' },
+              { text: 'Created At', value: 'createdAt' }
+            ],
             sources: [],
+            categoryLinks: [],
             stats: [],
             loading: false
         }
@@ -131,6 +138,11 @@ export default {
            this.sources =  res.data.data.items
            this.loading = false
         })
+       
+       CategoryLinkService.all({}).then(res => {
+          this.categoryLinks = res.data.data.items
+       })
+
     },
      methods: {
        formatDate(date) {
