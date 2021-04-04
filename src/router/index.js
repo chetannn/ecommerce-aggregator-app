@@ -11,6 +11,7 @@ import Dashboard from '@/views/admin/dashboard/Dashboard.vue'
 import Sources from '@/views/admin/source/Index.vue'
 import Users from '@/views/admin/user/Index.vue'
 import LoginExp from '@/views/LoginExperimental.vue'
+import ProductManagement from '@/views/admin/productManagement/Index.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -78,6 +79,10 @@ const routes = [
       path: 'users',
       name: 'users',
       component: Users
+    }, {
+      path: 'productManagement',
+      name: 'productManagement',
+      component: ProductManagement
     }]
   }
  

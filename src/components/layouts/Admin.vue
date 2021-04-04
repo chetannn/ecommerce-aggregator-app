@@ -150,7 +150,8 @@ export default {
         links: [
       { icon: 'mdi-view-dashboard-outline', text: 'Dashboard', route: '/admin/dashboard' },
       { icon: 'mdi-folder-outline', text: 'Sources', route: '/admin/source' },
-      { icon: 'mdi-account-circle-outline', text: 'User Management', route: '/admin/users' }
+      { icon: 'mdi-account-circle-outline', text: 'User Management', route: '/admin/users' },
+      { icon: 'mdi-heart', text: 'Products', route: '/admin/productManagement' }
     ],
      notifications: [
         { text: 'Check out this awesome ticket', icon: 'mdi-tag', color: 'warning' },
