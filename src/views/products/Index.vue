@@ -71,7 +71,7 @@
         <v-col cols="12" md="8">
           <v-row>
             <v-col :key="product.id" v-for="product in products" cols="12" md="6">
-              <v-card :to="product.productLink" exact class="mx-auto" max-width="400">
+              <v-card @click="openLink(product)" class="mx-auto" max-width="400">
                 <v-img
                   src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                   height="200px"
@@ -138,6 +138,9 @@ export default {
        this.currentPage = response.data.data.currentPage
        this.products = response.data.data.items
        this.$vuetify.goTo(0)
+    },
+    openLink(product) {
+        window.open(product.productLink, '_blank')
     }
   }
 };
