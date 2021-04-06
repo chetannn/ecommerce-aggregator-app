@@ -61,7 +61,21 @@
       </v-row>
 
       <v-card>
-      <v-data-table :loading="loading" :headers="headers" :items="sources">
+      <v-data-table @dblclick:row="onSourceRowDoubleClick" :loading="loading" :headers="headers" :items="sources">
+        <template v-slot:top>
+      <v-toolbar
+        flat
+      >
+        <v-toolbar-title>Sources</v-toolbar-title>
+        <v-divider
+          class="mx-4"
+          inset
+          vertical
+        ></v-divider>
+        <v-spacer></v-spacer>
+        <v-btn @click="dialog = true" dark class="primary mr-2" icon><v-icon>mdi-plus</v-icon></v-btn>
+      </v-toolbar>
+          </template>
 
         <template v-slot:[`item.actions`]="{ item }">
             <v-btn dark icon class="success">
@@ -98,8 +112,72 @@
       </v-card>
 
       <v-card class="mt-4">
-        <v-data-table :items="categoryLinks" :loading="loading" :headers="categoryLinkHeaders"></v-data-table>
+        <v-data-table :items="categoryLinks" :loading="loading" :headers="categoryLinkHeaders">
+          <template v-slot:top>
+      <v-toolbar
+        flat
+      >
+        <v-toolbar-title>Links</v-toolbar-title>
+        <v-divider
+          class="mx-4"
+          inset
+          vertical
+        ></v-divider>
+        <v-spacer></v-spacer>
+        <v-btn v-if="showCategory" @click="linkDialog = true" dark class="primary mr-2" icon><v-icon>mdi-plus</v-icon></v-btn>
+      </v-toolbar>
+          </template>
+
+           <template v-slot:[`item.createdAt`]="{ item }">
+                 {{ formatDate(item.createdAt) }}
+              </template>
+        </v-data-table>
       </v-card>
+
+      <v-dialog persistent v-model="dialog" max-width="500">
+          <v-card>
+            <v-card-title class="white--text headline primary mb-4">
+              Add Source
+                 <v-spacer />
+                  <v-btn icon text color="white" @click="dialog=false">
+                              <v-icon>mdi-close</v-icon>
+                            </v-btn>
+            </v-card-title>
+
+            <v-card-text>
+              <v-text-field v-model="form.name" outlined label="Name"></v-text-field>
+              <v-text-field v-model="form.link" outlined label="Link"></v-text-field>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer />
+              <v-btn text @click="dialog = false">Cancel</v-btn>
+              <v-btn color="primary" @click="save" text>Save</v-btn>
+            </v-card-actions>
+          </v-card>
+      </v-dialog>
+
+         <v-dialog persistent v-model="linkDialog" max-width="500">
+          <v-card>
+            <v-card-title class="white--text headline primary mb-4">
+              Add Link
+                 <v-spacer />
+                  <v-btn icon text color="white" @click="linkDialog=false">
+                              <v-icon>mdi-close</v-icon>
+                            </v-btn>
+            </v-card-title>
+
+            <v-card-text>
+              <v-text-field v-model="linkForm.link" outlined label="Link"></v-text-field>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer />
+              <v-btn text @click="linkDialog = false">Cancel</v-btn>
+              <v-btn color="primary" @click="saveLink" text>Save</v-btn>
+            </v-card-actions>
+          </v-card>
+      </v-dialog>
   </v-container>
 </template>
 
@@ -107,6 +185,7 @@
 import SourceService from '@/services/SourceService'
 import CategoryLinkService from '@/services/CategoryLinkService'
 import moment from 'moment'
+import { mapMutations } from 'vuex'
 
 export default {
     data() {
@@ -126,7 +205,18 @@ export default {
             sources: [],
             categoryLinks: [],
             stats: [],
-            loading: false
+            loading: false,
+            dialog: false,
+            linkDialog: false,
+            form: {
+              name: '',
+              url: ''
+            },
+            linkForm: {
+              link: '',
+              sourceId: null
+            },
+            showCategory: false
         }
     },
     mounted() {
@@ -138,15 +228,45 @@ export default {
            this.sources =  res.data.data.items
            this.loading = false
         })
-       
-       CategoryLinkService.all({}).then(res => {
-          this.categoryLinks = res.data.data.items
-       })
-
     },
      methods: {
+        ...mapMutations({
+          setSnackbar: 'snackbar/setSnackbar'
+       }),
        formatDate(date) {
         return moment(date).format('LLL')
+      },
+      save() {
+        SourceService.create(this.form).then(res => {
+          if(res.status === 201) {
+            this.dialog = false
+            this.setSnackbar({
+              message: res.data.message,
+              color: 'success'
+            })
+          }
+        })
+      },
+      saveLink() {
+        CategoryLinkService.create(this.linkForm).then(res => {
+          if(res.status === 201) {
+            this.linkDialog = false
+            this.setSnackbar({
+              message: res.data.message,
+              color: 'success'
+            })
+          }
+        })
+      },
+      onSourceRowDoubleClick(e, { item }) {
+        this.linkForm.sourceId = item.id
+       CategoryLinkService.all({}).then(res => {
+          this.categoryLinks = res.data.data.items
+          this.showCategory = true
+       })
+       .catch(err => {
+         this.showCategory = true
+       })
       }
     }
 }

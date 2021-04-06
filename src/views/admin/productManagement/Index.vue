@@ -18,7 +18,8 @@ export default {
         return {
             headers: [
                 { text: 'Name', value: 'productName' },
-                { text: 'Price', value: 'price' }
+                { text: 'Price', value: 'price' },
+                { text: 'Source', value: 'source' }
             ],
             products: []
         }

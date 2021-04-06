@@ -6,5 +6,8 @@ export default {
     },
     stats() {
         return Api.get('sources/statistics')
+    },
+    create(data) {
+        return Api.post('sources', data)
     }
 }
