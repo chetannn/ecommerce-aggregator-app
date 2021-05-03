@@ -1,6 +1,25 @@
 <template>
-  <v-card class="m-2">
+  <v-card class="mx-2 my-2">
       <v-data-table :items="products" :headers="headers">
+
+            <template v-slot:[`item.actions`]="{ item }">
+            <v-btn dark icon class="success">
+      <v-icon
+        small
+      >
+        mdi-pencil-outline
+      </v-icon>
+            </v-btn>
+
+      <v-btn class="ml-2 error" dark icon>      
+      <v-icon
+        small
+      >
+        mdi-delete-outline
+      </v-icon>
+      </v-btn>
+
+    </template>
       </v-data-table>
   </v-card>
 </template>
@@ -19,7 +38,8 @@ export default {
             headers: [
                 { text: 'Name', value: 'productName' },
                 { text: 'Price', value: 'price' },
-                { text: 'Source', value: 'source' }
+                { text: 'Source', value: 'source' },
+                { text: 'Actions', value: 'actions'}
             ],
             products: []
         }

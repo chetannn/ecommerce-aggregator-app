@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
      <v-row class="ma-0">
-      <v-card width="100%" class="ma-1">
+      <!-- <v-card width="100%" class="ma-1">
         <v-card-text>
           <v-row no-gutters>
             <v-col cols="12" md="6" class="d-flex justify-space-between justify-md-start">
@@ -34,7 +34,7 @@
             </v-col>
           </v-row>
         </v-card-text>
-      </v-card>
+      </v-card> -->
     </v-row>
 
       <v-row class="mb-2">
@@ -72,8 +72,8 @@
           inset
           vertical
         ></v-divider>
-        <v-spacer></v-spacer>
-        <v-btn @click="dialog = true" dark class="primary mr-2" icon><v-icon>mdi-plus</v-icon></v-btn>
+        <!-- <v-spacer></v-spacer> -->
+        <v-btn @click="dialog = true" dark class="primary mr-2" >Add<v-icon>mdi-plus</v-icon></v-btn>
       </v-toolbar>
           </template>
 

@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-         <v-row class="ma-0">
+         <!-- <v-row class="ma-0">
       <v-card width="100%" class="ma-1">
         <v-card-text>
           <v-row no-gutters>
@@ -35,7 +35,7 @@
           </v-row>
         </v-card-text>
       </v-card>
-    </v-row>
+    </v-row> -->
     
       <v-row class="mb-2">
           <v-col cols="12" md="4">
@@ -61,7 +61,7 @@
       </v-row>
 
       <v-card>
-      <v-data-table @dblclick:row="onSourceRowDoubleClick" :loading="loading" :headers="headers" :items="sources">
+      <v-data-table show-select single-select @dblclick:row="onSourceRowDoubleClick" :loading="loading" :headers="headers" :items="sources">
         <template v-slot:top>
       <v-toolbar
         flat
@@ -72,8 +72,8 @@
           inset
           vertical
         ></v-divider>
-        <v-spacer></v-spacer>
-        <v-btn @click="dialog = true" dark class="primary mr-2" icon><v-icon>mdi-plus</v-icon></v-btn>
+        <!-- <v-spacer></v-spacer> -->
+        <v-btn @click="dialog = true" dark class="primary mr-2" >Add<v-icon>mdi-plus</v-icon></v-btn>
       </v-toolbar>
           </template>
 
@@ -123,8 +123,8 @@
           inset
           vertical
         ></v-divider>
-        <v-spacer></v-spacer>
-        <v-btn v-if="showCategory" @click="linkDialog = true" dark class="primary mr-2" icon><v-icon>mdi-plus</v-icon></v-btn>
+        <!-- <v-spacer></v-spacer> -->
+        <v-btn v-if="showCategory" @click="linkDialog = true" dark class="primary mr-2">Add<v-icon>mdi-plus</v-icon></v-btn>
       </v-toolbar>
           </template>
 
@@ -258,8 +258,9 @@ export default {
           }
         })
       },
-      onSourceRowDoubleClick(e, { item }) {
+      onSourceRowDoubleClick(e, { item, select }) {
         this.linkForm.sourceId = item.id
+        select(true)
        CategoryLinkService.all({}).then(res => {
           this.categoryLinks = res.data.data.items
           this.showCategory = true

@@ -1,8 +1,8 @@
 <template>
 <v-app>
     <v-app-bar app color="primary" dark>
-        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-app-bar-title>Admin</v-app-bar-title>
+        <!-- <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon> -->
+      <v-app-bar-title>Nepagator</v-app-bar-title>
 
       <v-spacer></v-spacer>
       <v-menu
@@ -52,7 +52,7 @@
       min-width="180"
       offset-y
       bottom
-      left
+      right
       nudge-bottom="10">
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -99,14 +99,14 @@
            <div class="greeting-text mr-3 d-none d-md-block">Hi, <span>{{ user.firstName}} {{ user.lastName}}</span></div>
       </v-app-bar>
 
-      <v-navigation-drawer v-model="drawer" app>
-          
+      <v-navigation-drawer expand-on-hover v-model="drawer" app>
+<!--           
            <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="title">Aggregator</v-list-item-title>
         <v-list-item-subtitle>sub title</v-list-item-subtitle>
       </v-list-item-content>
-    </v-list-item>
+    </v-list-item> -->
 
           
         
@@ -114,7 +114,7 @@
     <v-divider></v-divider>
 
      <v-list>
-               <v-list-item link  color="primary" v-for="item in links" :to="item.route" :key="item.text">
+               <v-list-item link v-for="item in links" :to="item.route" :key="item.text">
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-item-icon>
@@ -177,5 +177,9 @@ export default {
 </script>
 
 <style>
+.gradient-color {
+      background: linear-gradient(to bottom, #59c173, #a17fe0, #5d26c1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+
+}
 </style>
