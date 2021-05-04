@@ -86,7 +86,7 @@
       </v-icon>
             </v-btn>
 
-      <v-btn class="ml-2 error" dark icon>      
+      <v-btn @click="onDeleteSourceClick(item)" class="ml-2 error" dark icon>      
       <v-icon
         small
       >
@@ -268,7 +268,18 @@ export default {
        .catch(err => {
          this.showCategory = true
        })
-      }
+      },
+      onDeleteSourceClick(source) {
+       SourceService.delete(source.id).then(res => {
+          if(res.status === 200) {
+            this.setSnackbar({
+              message: res.data.message,
+              color: 'success'
+            })
+            // this.all()
+          }
+        })
+      },
     }
 }
 </script>

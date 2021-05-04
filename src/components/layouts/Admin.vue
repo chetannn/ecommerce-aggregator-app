@@ -67,7 +67,8 @@
           >
        </v-avatar>
 
-           <v-avatar v-else size="40">{{ user.firstName }}</v-avatar>
+           <v-avatar v-else size="40"><v-icon>mdi-account-circle-outline</v-icon></v-avatar>
+           
           </v-btn>
         </template>
 
@@ -92,6 +93,7 @@
               large
               outlined
               color="primary"
+              @click="logout"
               class="text-capitalize">Sign Out</v-btn>
           </div>
          </v-list>
@@ -162,6 +164,11 @@ export default {
       notificationsBadge: true,
      }
    },
+    methods: {
+     ...mapActions({
+      logout: 'auth/logout'
+    })
+  },
    computed: {
     ...mapGetters({
       user: 'auth/user',

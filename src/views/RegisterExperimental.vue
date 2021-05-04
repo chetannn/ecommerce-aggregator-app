@@ -8,10 +8,10 @@
               <div>
                 <h2
                   class="display-1 white--text font-weight-medium"
-                >Elegant Design with unlimited features, built with love</h2>
+                >Nepagator</h2>
                 <h6
                   class="subtitle-1 mt-4 white--text op-5 font-weight-regular"
-                >Wrappixel helps developers to build organized and well-coded admin dashboards full of beautiful and feature rich modules.</h6>
+                >Bringing E-commerce together.</h6>
                 <v-btn class="mt-4 text-capitalize" x-large outlined color="white">Learn More</v-btn>
               </div>
             </v-col>
@@ -28,7 +28,7 @@
               <h2 class="font-weight-bold mt-4 blue-grey--text text--darken-2">Sign Up</h2>
               <h6 class="subtitle-1">
                 Don't have an account?
-                <a href="#/pages/fulllogin/" class>Sign in</a>
+                <a @click="$router.push('/auth/login')" style="text-decoration:none;">Sign in</a>
               </h6>
 
               <v-form ref="form" v-model="valid" lazy-validation action="/pages/boxedlogin">

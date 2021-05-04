@@ -9,5 +9,8 @@ export default {
     },
     create(data) {
         return Api.post('sources', data)
+    },
+    delete(id) {
+        return Api.delete('sources/' + id)
     }
 }
