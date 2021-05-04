@@ -71,7 +71,7 @@
                   @click="submit"
                 >Sign In</v-btn>
               </v-form>
-              <div class="text-center mt-6">
+              <!-- <div class="text-center mt-6">
                 <v-chip pill class="mr-2">
                   <v-avatar left>
                     <v-btn color="blue lighten-1" class="white--text">
@@ -86,7 +86,7 @@
                     </v-btn>
                   </v-avatar>Github
                 </v-chip>
-              </div>
+              </div> -->
             </v-col>
           </v-row>
         </div>

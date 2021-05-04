@@ -27,7 +27,7 @@
               <!-- <img src="@/assets/images/logo-icon.png" /> -->
               <h2 class="font-weight-bold mt-4 blue-grey--text text--darken-2">Sign Up</h2>
               <h6 class="subtitle-1">
-                Don't have an account?
+                 Have an account?
                 <a @click="$router.push('/auth/login')" style="text-decoration:none;">Sign in</a>
               </h6>
 
@@ -69,7 +69,7 @@
                   @click="submit"
                 >Sign In</v-btn>
               </v-form>
-              <div class="text-center mt-6">
+              <!-- <div class="text-center mt-6">
                 <v-chip pill class="mr-2">
                   <v-avatar left>
                     <v-btn color="blue lighten-1" class="white--text">
@@ -84,7 +84,7 @@
                     </v-btn>
                   </v-avatar>Github
                 </v-chip>
-              </div>
+              </div> -->
             </v-col>
           </v-row>
         </div>

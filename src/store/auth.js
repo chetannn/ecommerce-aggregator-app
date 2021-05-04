@@ -53,7 +53,8 @@ export default {
          },
          logout({ commit }) {
            commit('setToken', null)
-           location.reload()
+           window.location = 'http://localhost:8080'
+          //  location.reload()
          }
     }
 }
