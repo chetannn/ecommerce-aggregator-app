@@ -42,12 +42,13 @@
                 ></v-text-field>
                 <v-text-field
                   v-model="password"
-                  :counter="10"
+                  counter
                   :rules="passwordRules"
                   label="Password"
                   required
                   outlined
                   :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append="onTogglePasswordVisibility"
                   :type="show1 ? 'text' : 'password'"
                 ></v-text-field>
 
@@ -96,7 +97,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
   name: "FullLogin",
@@ -116,6 +117,9 @@ export default {
     checkbox: false
   }),
   methods: {
+     ...mapMutations({
+          setSnackbar: 'snackbar/setSnackbar'
+       }),
      ...mapActions({
       signIn: 'auth/signIn'
     }),
@@ -131,11 +135,20 @@ export default {
         })
         .catch((e) => {
           let res = e.response
+          if(res.status === 403) {
+            this.setSnackbar({
+              message: res.data.error,
+              color: 'error'
+            })
+          }
           // this.notificationMessage = res.data.error
           // this.snackbar = true
           // this.loading = false
         })
       }
+    },
+    onTogglePasswordVisibility() {
+      this.show1 = !this.show1
     }
   }
 };

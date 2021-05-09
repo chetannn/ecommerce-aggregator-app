@@ -1,79 +1,133 @@
 <template>
 <v-container fluid>
      <v-row no-gutters class="d-flex justify-space-between mt-10 mb-6">
-        <h1 class="page-title">Dashboard</h1>
      </v-row>
-      <v-row>
-        <v-col lg="3" sm="6" md="4" cols="12">
-            <v-card class="mx-1 mb-1">
-            <v-card-title class="pa-6 pb-3">
-              <p>Daraz</p>
-              <v-spacer></v-spacer>
-            </v-card-title>
 
-            <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters class="pb-5">
-                <v-col cols="5" class="my-auto">
-                  <span
-                    class="font-weight-medium card-dark-grey"
-                    style="font-size: 24px"
-                    >12, 678</span
-                  >
-                </v-col>
-              </v-row>
-            </v-card-text>
-            </v-card>
-        </v-col>
+        <v-row>
+    <v-col
+      cols="12"
+      lg="4"
+      sm="6"
+      class="py-0 mb-7"
+    >
+      <v-card max-width="700">
+        <v-card-text class="pa-5">
+          <div class="d-flex align-center">
+            <v-btn
+              class="elevation-0"
+              fab
+              dark
+            >
+              <v-icon>mdi-handshake-outline</v-icon>
+            </v-btn>
+            <div class="ml-4 mr-1">
+              <h2>
+                100
+              </h2>
+              <h5 class="subtitle-2 font-weight-bold">
+                 Sastodeal
+              </h5>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
 
-        <v-col lg="3" sm="6" md="4" cols="12">
-            <v-card class="mx-1 mb-1">
-            <v-card-title class="pa-6 pb-3">
-              <p>SastoDeal</p>
-              <v-spacer></v-spacer>
-            </v-card-title>
+    </v-col>
+     <v-col
+      cols="12"
+      lg="4"
+      sm="6"
+      class="py-0 mb-7"
+    >
+      <v-card max-width="700">
+        <v-card-text class="pa-5">
+          <div class="d-flex align-center">
+            <v-btn
+              class="elevation-0 primary"
+              fab
+              dark
+            >
+              <v-icon>mdi-check-circle-outline</v-icon>
+            </v-btn>
+            <div class="ml-4 mr-1">
+              <h2>
+                200
+              </h2>
+              <h5 class="subtitle-2 font-weight-bold">
+                 Okdam
+              </h5>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-col>
 
-            <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters class="pb-5">
-                <v-col cols="5" class="my-auto">
-                  <span
-                    class="font-weight-medium card-dark-grey"
-                    style="font-size: 24px"
-                    >12, 678</span
-                  >
-                </v-col>
-              </v-row>
-            </v-card-text>
-            </v-card>
-        </v-col>
 
-         <v-col lg="3" sm="6" md="4" cols="12">
-            <v-card class="mx-1 mb-1">
-            <v-card-title class="pa-6 pb-3">
-              <p>OkDam</p>
-              <v-spacer></v-spacer>
-            </v-card-title>
+     <v-col
+      cols="12"
+      lg="4"
+      sm="6"
+      class="py-0 mb-7"
+    >
+      <v-card max-width="700">
+        <v-card-text class="pa-5">
+          <div class="d-flex align-center">
+            <v-btn
+              class="elevation-0 success"
+              fab
+              dark
+            >
+              <v-icon>mdi-basket-outline</v-icon>
+            </v-btn>
+            <div class="ml-4 mr-1">
+              <h2>
+                200
+              </h2>
+              <h5 class="subtitle-2 font-weight-bold">
+                 Smartdoko
+              </h5>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-col>
 
-            <v-card-text class="pa-6 pt-0">
-              <v-row no-gutters class="pb-5">
-                <v-col cols="5" class="my-auto">
-                  <span
-                    class="font-weight-medium card-dark-grey"
-                    style="font-size: 24px"
-                    >12, 678</span
-                  >
-                </v-col>
-              </v-row>
-            </v-card-text>
-            </v-card>
-        </v-col>
-        
-      </v-row>
-
-      <v-row>
+    <v-col
+      cols="12"
+      lg="4"
+      sm="6"
+      class="py-0 mb-7"
+    >
+      <v-card max-width="700">
+        <v-card-text class="pa-5">
+          <div class="d-flex align-center">
+            <v-btn
+              class="elevation-0 success"
+              fab
+              dark
+            >
+              <v-icon>mdi-beach</v-icon>
+            </v-btn>
+            <div class="ml-4 mr-1">
+              <h2>
+                600
+              </h2>
+              <h5 class="subtitle-2 font-weight-bold">
+                 Nepbay
+              </h5>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
+      
+      <!-- <v-row>
         <v-card>
             <v-data-table :headers="headers"></v-data-table>
         </v-card>
-      </v-row>
+      </v-row> -->
+    
 </v-container>
 </template>
 

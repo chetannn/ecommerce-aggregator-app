@@ -101,7 +101,7 @@
            <div class="greeting-text mr-3 d-none d-md-block">Hi, <span>{{ user.firstName}} {{ user.lastName}}</span></div>
       </v-app-bar>
 
-      <v-navigation-drawer expand-on-hover v-model="drawer" app>
+      <v-navigation-drawer dark class="gradient" expand-on-hover v-model="drawer" app>
 <!--           
            <v-list-item>
       <v-list-item-content>
@@ -153,7 +153,8 @@ export default {
       { icon: 'mdi-view-dashboard-outline', text: 'Dashboard', route: '/admin/dashboard' },
       { icon: 'mdi-folder-outline', text: 'Sources', route: '/admin/source' },
       { icon: 'mdi-account-circle-outline', text: 'User Management', route: '/admin/users' },
-      { icon: 'mdi-heart', text: 'Products', route: '/admin/productManagement' }
+      { icon: 'mdi-cart-outline', text: 'Products', route: '/admin/productManagement' },
+      { icon: 'mdi-heart-outline', text: 'Favorites', route: '/admin/productManagement' }
     ],
      notifications: [
         { text: 'Check out this awesome ticket', icon: 'mdi-tag', color: 'warning' },
@@ -184,9 +185,11 @@ export default {
 </script>
 
 <style>
-.gradient-color {
-      background: linear-gradient(to bottom, #59c173, #a17fe0, #5d26c1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
+.gradient {
+  background: linear-gradient(
+    to bottom,
+    #009fff,
+    #ec2f4b
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 </style>

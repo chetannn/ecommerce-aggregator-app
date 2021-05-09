@@ -1,10 +1,13 @@
 import Vue from 'vue'
+import VuetifyConfirm from 'vuetify-confirm'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 
 require('@/store/subscriber')
+
+Vue.use(VuetifyConfirm, { vuetify })
 
 Vue.config.productionTip = false
 

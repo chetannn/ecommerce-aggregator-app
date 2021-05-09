@@ -5,13 +5,15 @@
       color="primary"
       dark
     >
-      <v-app-bar-title>Ecommerce Aggregator</v-app-bar-title>
+      <v-app-bar-title>Nepagator</v-app-bar-title>
 
       <div class="d-flex align-center">
       </div>
 
       <v-spacer></v-spacer>
       <v-btn text @click="$router.push('/products')">Products</v-btn>
+      <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>
+
         <v-menu
       min-width="180"
       offset-y
