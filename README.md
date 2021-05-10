@@ -31,7 +31,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * [x] Work on favorites Page to show favorites product design (frontend)
 * [x] List favorites API (backend)
 * [x] Favorite/UnFavorite product API (done)
-* [] UI for toggling favorites/unfavorites API (favoriting done unfavorite remain)
+* [x] UI for toggling favorites/unfavorites API (done)
 * [] Profile picture update from admin panel on edit (frontend/backend both)
 * [] filtering on admin panel for (product, users, sources, and links)
 * [] Admin to able to see favorite product and users and can toggle every favorites (front/back both)
@@ -40,3 +40,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * [] Show All links by source dynamically (client)
 * [x] Add nprogress and confirm dialog library [done]
 * [x] Implement confirm dialog everywhere (link and favorites remain)
+* [] Implement crud overall admin panel (source, users, links, products)
+* [] Only allow admin users to visit admin page
+* [] Password change feature (add if possible)
