@@ -1,5 +1,7 @@
 <template>
   <v-container fluid>
+    <UserAdd ref="userAdd" @onUserSave="onUserAdd" />
+    <UserEdit ref="userEdit" @onUserEdit="onUserEdit" />
     <v-row class="ma-0">
       <!-- <v-card width="100%" class="ma-1">
         <v-card-text>
@@ -67,7 +69,7 @@
             <v-toolbar-title>Users</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <!-- <v-spacer></v-spacer> -->
-            <v-btn @click="dialog = true" dark class="primary mr-2"
+            <v-btn @click="openAddDialog" dark class="primary mr-2"
               >Add<v-icon>mdi-plus</v-icon></v-btn
             >
           </v-toolbar>
@@ -88,7 +90,7 @@
         </template>
 
         <template v-slot:[`item.actions`]="{ item }">
-          <v-btn dark icon class="success">
+          <v-btn @click="openEditDialog(item)" dark icon class="success">
             <v-icon small> mdi-pencil-outline </v-icon>
           </v-btn>
 
@@ -111,59 +113,7 @@
       </v-data-table>
     </v-card>
 
-    <v-dialog persistent v-model="dialog" max-width="500">
-      <v-card>
-        <v-card-title class="white--text headline primary">
-          Add User
-
-          <v-spacer />
-          <v-btn icon text color="white" @click="dialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-title>
-
-        <div class="py-6 blue-grey lighten-4 text-center mb-2">
-          <v-avatar size="128" class="grey lighten-4">
-            <!-- <v-img
-                              :src="require('@/assets/images/users' + form.avatar)"
-                              alt="avatar"
-                            ></v-img> -->
-            <span>Click to add an avatar</span>
-          </v-avatar>
-        </div>
-
-        <v-card-text>
-          <v-text-field
-            v-model="form.firstName"
-            outlined
-            label="First Name"
-          ></v-text-field>
-          <v-text-field
-            v-model="form.lastName"
-            outlined
-            label="Last Name"
-          ></v-text-field>
-          <v-text-field
-            v-model="form.email"
-            outlined
-            label="Email"
-          ></v-text-field>
-          <v-text-field
-            type="password"
-            v-model="form.password"
-            outlined
-            label="Password"
-          ></v-text-field>
-          <v-switch v-model="form.isAdmin" label="Admin" inset></v-switch>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer />
-          <v-btn text @click="dialog = false">Close</v-btn>
-          <v-btn @click="save" text color="primary">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    
   </v-container>
 </template>
 
@@ -172,8 +122,14 @@ import UserService from "@/services/UserService";
 import AuthenticationService from "@/services/AuthenticationService";
 import moment from "moment";
 import { mapMutations } from "vuex";
+import UserAdd from './Add'
+import UserEdit from './Edit'
 
 export default {
+  components: {
+    UserAdd,
+    UserEdit
+  },
   data() {
     return {
       headers: [
@@ -190,14 +146,7 @@ export default {
       stats: [],
       loading: false,
       dialog: false,
-      form: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        isAdmin: false,
-        profilePath: "",
-      },
+     
     };
   },
   mounted() {
@@ -222,20 +171,21 @@ export default {
         }
       });
     },
-    save() {
-      AuthenticationService.register(this.form).then((res) => {
-        if (res.status === 201) {
-          this.dialog = false;
-          this.setSnackbar({
-            message: "User Registered Successfully!",
-            color: "success",
-          });
-          this.all();
-        }
-      });
+    openAddDialog() {
+      this.$refs.userAdd.create();
+    },
+    onUserAdd(user) {
+        console.log(user)
+        this.all()
+    },
+    openEditDialog(user) {
+      this.$refs.userEdit.edit(user.id)
+    },
+    onUserEdit(user) {
+
     },
     deleteUser(user) {
-      this.$confirm("Are you sure you want to delete this user?", { title: "Warning" }).then(
+      this.$confirm("Are you sure you want to delete this user?", { title: "Warning", persistent: true }).then(
         (res) => {
           if (res) {
             UserService.deleteUser(user.id).then((res) => {

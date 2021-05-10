@@ -19,5 +19,8 @@ export default {
     },
     stats() {
         return Api.get('users/statistics')
+    },
+    getUserById(id) {
+        return Api.get('users/' + id)
     }
 }

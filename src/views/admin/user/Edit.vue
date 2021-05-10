@@ -2,14 +2,18 @@
   <v-dialog persistent v-model="dialog" max-width="500">
     <v-card>
       <v-card-title class="white--text headline primary mb-2">
-        Add User
+        Edit User
         <v-spacer />
         <v-btn icon text color="white" @click="dialog = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-card-title>
 
-      
+      <div class="py-6 blue-grey lighten-4 text-center mb-2">
+        <v-avatar size="128" class="grey lighten-4">
+          <img :src="getPath()" alt="avatar">
+        </v-avatar>
+      </div>
 
       <v-card-text>
         <v-text-field
@@ -46,7 +50,7 @@
 </template>
 
 <script>
-import AuthenticationService from "@/services/AuthenticationService";
+import UserService from "@/services/UserService";
 import { mapMutations } from "vuex";
 
 export default {
@@ -67,21 +71,28 @@ export default {
       ...mapMutations({
       setSnackbar: "snackbar/setSnackbar",
     }),
-    create() {
-      this.dialog = true;
+    edit(id) {
+     UserService.getUserById(id).then(res => {
+         delete res.data.data.password
+         this.form = res.data.data
+         this.dialog = true;
+     })
     },
     save() {
-        AuthenticationService.register(this.form).then((res) => {
-        if (res.status === 201) {
-          this.dialog = false;
-          this.setSnackbar({
-            message: "User Registered Successfully!",
-            color: "success",
-          });
-          this.$emit('onUserSave', res.data)
-        }
-      });
+    //     AuthenticationService.register(this.form).then((res) => {
+    //     if (res.status === 201) {
+    //       this.dialog = false;
+    //       this.setSnackbar({
+    //         message: "User Registered Successfully!",
+    //         color: "success",
+    //       });
+    //       this.$emit('onUserSave', res.data)
+    //     }
+    //   });
     },
+    getPath() {
+        return `http://localhost:3000${this.form.profilePath}`
+    }
   },
 };
 </script>
