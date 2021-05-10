@@ -53,7 +53,6 @@ export default {
       });
     },
     unfavoriteProduct(fav) {
-        console.log(fav)
       Api.delete(`product/unfavorite/${fav.id}`).then((res) => {
         if (res.status === 200) {
           this.setSnackbar({

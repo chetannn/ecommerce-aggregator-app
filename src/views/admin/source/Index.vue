@@ -129,6 +129,10 @@
         <template v-slot:[`item.createdAt`]="{ item }">
           {{ formatDate(item.createdAt) }}
         </template>
+
+         <template v-slot:[`item.sourceId`]="{ item }">
+            <span>{{item.Source.name}}</span>
+         </template>
       </v-data-table>
     </v-card>
 
@@ -271,9 +275,10 @@ export default {
     onSourceRowDoubleClick(e, { item, select }) {
       this.linkForm.sourceId = item.id;
       select(true);
-      CategoryLinkService.all({})
+      CategoryLinkService.getAllCategoryLinksBySourceId(item.id)
         .then((res) => {
-          this.categoryLinks = res.data.data.items;
+          this.categoryLinks = res.data.data;
+          this.$vuetify.goTo(9999);
           this.showCategory = true;
         })
         .catch((err) => {

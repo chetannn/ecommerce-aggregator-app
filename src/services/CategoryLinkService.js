@@ -6,5 +6,8 @@ export default {
     },
     create(data) {
         return Api.post('categoryLinks', data)
+    },
+    getAllCategoryLinksBySourceId(sourceId) {
+        return Api.get('categoryLinks/source/' + sourceId)
     }
 }
