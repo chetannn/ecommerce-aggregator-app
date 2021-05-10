@@ -154,7 +154,7 @@ export default {
       { icon: 'mdi-folder-outline', text: 'Sources', route: '/admin/source' },
       { icon: 'mdi-account-circle-outline', text: 'User Management', route: '/admin/users' },
       { icon: 'mdi-cart-outline', text: 'Products', route: '/admin/productManagement' },
-      { icon: 'mdi-heart-outline', text: 'Favorites', route: '/admin/productManagement' }
+      { icon: 'mdi-heart-outline', text: 'Favorites', route: '/admin/favorites' }
     ],
      notifications: [
         { text: 'Check out this awesome ticket', icon: 'mdi-tag', color: 'warning' },

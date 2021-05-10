@@ -34,7 +34,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * [x] UI for toggling favorites/unfavorites API (done)
 * [] Profile picture update from admin panel on edit (frontend/backend both)
 * [] filtering on admin panel for (product, users, sources, and links)
-* [] Admin to able to see favorite product and users and can toggle every favorites (front/back both)
+* [x] Admin to able to see favorite product and users and can toggle every favorites (front/back both) [toggle part remain]
 * [] Forgot password feature (front and back both)
 * [] Email verification feature (front and back both)
 * [] Show All links by source dynamically (client)

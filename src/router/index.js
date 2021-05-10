@@ -15,6 +15,7 @@ import Users from '@/views/admin/user/Index.vue'
 import Favorite from '@/views/favorite/Index.vue'
 import LoginExp from '@/views/LoginExperimental.vue'
 import ProductManagement from '@/views/admin/productManagement/Index.vue'
+import AdminFavorite from '@/views/admin/favorite/Index.vue'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -93,6 +94,10 @@ const routes = [
       path: 'productManagement',
       name: 'productManagement',
       component: ProductManagement
+    }, {
+      path: 'favorites',
+      name: 'adminFavorites',
+      component: AdminFavorite
     }]
   }
  
