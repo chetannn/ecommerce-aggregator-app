@@ -30,13 +30,13 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 *[] Count API for dashboard (backend)
 *[] Work on favorites Page to show favorites product design (frontend)
 *[] List favorites API (backend)
-*[] Favorite/UnFavorite product API
-*[] UI for toggling favorites/unfavorites API
+*[x] Favorite/UnFavorite product API (done)
+*[] UI for toggling favorites/unfavorites API (favoriting UI part done)
 *[] Profile picture update from admin panel on edit (frontend/backend both)
 *[] filtering on admin panel for (product, users, sources, and links)
 *[] Admin to able to see favorite product and users and can toggle every favorites (front/back both)
 *[] Forgot password feature (front and back both)
 *[] Email verification feature (front and back both)
 *[] Show All links by source dynamically (client)
-*[] Add nprogress and confirm dialog library [add need to configure]
-*[] Implement confirm dialog everywhere
+*[x] Add nprogress and confirm dialog library [done]
+*[x] Implement confirm dialog everywhere (link and favorites remain)

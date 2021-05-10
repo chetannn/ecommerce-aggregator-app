@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import NProgress from 'nprogress'
+
 import RegisterExperimental from '../views/RegisterExperimental.vue'
 import Login from '../views/Login.vue'
 import Auth2 from '../components/layouts/Auth2.vue'
@@ -10,6 +12,7 @@ import Admin from '@/components/layouts/Admin.vue'
 import Dashboard from '@/views/admin/dashboard/Dashboard.vue'
 import Sources from '@/views/admin/source/Index.vue'
 import Users from '@/views/admin/user/Index.vue'
+import Favorite from '@/views/favorite/Index.vue'
 import LoginExp from '@/views/LoginExperimental.vue'
 import ProductManagement from '@/views/admin/productManagement/Index.vue'
 import store from '../store'
@@ -61,6 +64,13 @@ const routes = [
       meta: {
         requiresAuth: true
       }
+    }, {
+      path: 'favorites',
+      name: 'favorites',
+      component: Favorite,
+      meta: {
+        requiresAuth: true
+      }
     }]
   },
   {
@@ -104,6 +114,18 @@ router.beforeEach((to, from, next) => {
      next()
   }
   next()
+})
+
+router.beforeResolve((to, from, next) => {
+  if (to.name) {
+      NProgress.start()
+  }
+  next()
+});
+
+
+router.afterEach((to, from) => {
+  NProgress.done()
 })
 
 export default router

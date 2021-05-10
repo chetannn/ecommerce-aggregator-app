@@ -5,6 +5,8 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 
+import '../node_modules/nprogress/nprogress.css'
+
 require('@/store/subscriber')
 
 Vue.use(VuetifyConfirm, { vuetify })

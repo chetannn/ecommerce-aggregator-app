@@ -1,5 +1,5 @@
 <template>
-<div>
+<v-app>
  <v-app-bar
       app
       color="primary"
@@ -7,12 +7,12 @@
     >
       <v-app-bar-title>Nepagator</v-app-bar-title>
 
-      <div class="d-flex align-center">
-      </div>
+      <!-- <div class="d-flex align-center">
+      </div> -->
 
       <v-spacer></v-spacer>
       <v-btn text @click="$router.push('/products')">Products</v-btn>
-      <v-btn icon><v-icon>mdi-heart</v-icon></v-btn>
+      <v-btn @click="$router.push('/favorites')" icon><v-icon>mdi-heart</v-icon></v-btn>
 
         <v-menu
       min-width="180"
@@ -72,7 +72,14 @@
     <v-main>
       <router-view />
     </v-main>
- </div>
+
+     <v-snackbar 
+    top center 
+    v-model="$store.state.snackbar.show" 
+    :color="snackbarColor"
+    timeout="3000"
+    >{{ snackbarText }}</v-snackbar>
+</v-app>
 </template>
 
 <script>
@@ -87,7 +94,9 @@ export default {
    computed: {
     ...mapGetters({
       user: 'auth/user',
-      authenticated: 'auth/authenticated'
+      authenticated: 'auth/authenticated',
+      snackbarText: 'snackbar/snackbarText',
+      snackbarColor: 'snackbar/color'
     }),
     profilePath() {
       return `http://localhost:3000${this.user.profilePath}`
