@@ -22,5 +22,8 @@ export default {
     },
     getUserById(id) {
         return Api.get('users/' + id)
+    },
+    updateUser(user) {
+        return Api.put('users/' + user.id, user)
     }
 }

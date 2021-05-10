@@ -9,5 +9,8 @@ export default {
     },
     getAllCategoryLinksBySourceId(sourceId) {
         return Api.get('categoryLinks/source/' + sourceId)
+    },
+    deleteCategoryLink(id) {
+        return Api.delete('categoryLinks/' + id)
     }
 }

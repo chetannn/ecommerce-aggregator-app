@@ -40,6 +40,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * [x] Show All links by source dynamically (done)
 * [x] Add nprogress and confirm dialog library [done]
 * [x] Implement confirm dialog everywhere (link and favorites remain)
-* [] Implement crud overall admin panel (source, users, links, products) (User update and upload profile on edit remain, other all remain doing)
+* [] Implement crud overall admin panel (source, users, links) (User Crud completed, Source and Link Edit remain)
 * [] Only allow admin users to visit admin page
 * [] Password change feature (add if possible)

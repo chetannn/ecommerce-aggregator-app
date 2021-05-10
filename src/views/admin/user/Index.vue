@@ -182,7 +182,7 @@ export default {
       this.$refs.userEdit.edit(user.id)
     },
     onUserEdit(user) {
-
+      this.all()
     },
     deleteUser(user) {
       this.$confirm("Are you sure you want to delete this user?", { title: "Warning", persistent: true }).then(

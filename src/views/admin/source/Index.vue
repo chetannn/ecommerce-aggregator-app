@@ -130,24 +130,19 @@
           {{ formatDate(item.createdAt) }}
         </template>
 
-         <template v-slot:[`item.sourceId`]="{ item }">
-            <span>{{item.Source.name}}</span>
-         </template>
+        <template v-slot:[`item.sourceId`]="{ item }">
+          <span>{{ item.Source.name }}</span>
+        </template>
 
-         <template v-slot:[`item.actions`]="{ item }">
+        <template v-slot:[`item.actions`]="{ item }">
           <v-btn dark icon class="success">
             <v-icon small> mdi-pencil-outline </v-icon>
           </v-btn>
 
-          <v-btn
-            class="ml-2 error"
-            dark
-            icon
-          >
+          <v-btn @click="onDeleteCategoryLink(item)" class="ml-2 error" dark icon>
             <v-icon small> mdi-delete-outline </v-icon>
           </v-btn>
         </template>
-
       </v-data-table>
     </v-card>
 
@@ -167,11 +162,7 @@
             outlined
             label="Name"
           ></v-text-field>
-          <v-text-field
-            v-model="form.link"
-            outlined
-            label="Link"
-          ></v-text-field>
+          <v-text-field v-model="form.url" outlined label="Link"></v-text-field>
         </v-card-text>
 
         <v-card-actions>
@@ -230,7 +221,7 @@ export default {
         { text: "Source", value: "sourceId" },
         { text: "Link", value: "link" },
         { text: "Created At", value: "createdAt" },
-        { text: "Actions", value: 'actions' }
+        { text: "Actions", value: "actions" },
       ],
       sources: [],
       categoryLinks: [],
@@ -304,7 +295,7 @@ export default {
     onDeleteSourceClick(source) {
       this.$confirm("Are you sure you want to delete this source?", {
         title: "Warning",
-        persistent: true
+        persistent: true,
       }).then((res) => {
         if (res) {
           SourceService.delete(source.id).then((res) => {
@@ -316,6 +307,25 @@ export default {
               // this.all()
             }
           });
+        }
+      });
+    },
+    onDeleteCategoryLink(categoryLink) {
+      this.$confirm("Are you sure you want to delete this link?", {
+        title: "Warning",
+        persistent: true,
+      }).then((res) => {
+        if (res) {
+          CategoryLinkService.deleteCategoryLink(categoryLink.id).then(
+            (res) => {
+              if (res.status === 200) {
+                this.setSnackbar({
+                  message: res.data.message,
+                  color: "success",
+                });
+              }
+            }
+          );
         }
       });
     },

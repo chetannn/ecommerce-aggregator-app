@@ -79,16 +79,16 @@ export default {
      })
     },
     save() {
-    //     AuthenticationService.register(this.form).then((res) => {
-    //     if (res.status === 201) {
-    //       this.dialog = false;
-    //       this.setSnackbar({
-    //         message: "User Registered Successfully!",
-    //         color: "success",
-    //       });
-    //       this.$emit('onUserSave', res.data)
-    //     }
-    //   });
+        UserService.updateUser(this.form).then((res) => {
+        if (res.status === 200) {
+          this.dialog = false;
+          this.setSnackbar({
+            message: res.data.message,
+            color: "success",
+          });
+          this.$emit('onUserEdit', res.data)
+        }
+      });
     },
     getPath() {
         return `http://localhost:3000${this.form.profilePath}`
