@@ -24,7 +24,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### TODO
 
-*[x] Authentication exception handling on frontend
+* [x] Authentication exception handling on frontend
 *[] Add server side filters for products searching 
 *[x] Add charts and counts for dashboard (frontend) (done for now charts need to add)
 *[] Count API for dashboard (backend)
