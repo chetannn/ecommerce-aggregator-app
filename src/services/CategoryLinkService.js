@@ -12,5 +12,12 @@ export default {
     },
     deleteCategoryLink(id) {
         return Api.delete('categoryLinks/' + id)
+    },
+    getById(id) {
+        return Api.get('categoryLinks/' + id)
+    },
+    update(link) {
+        return Api.put('categoryLinks/' + link.id, link)
     }
+
 }

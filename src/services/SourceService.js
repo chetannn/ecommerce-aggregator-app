@@ -12,5 +12,11 @@ export default {
     },
     delete(id) {
         return Api.delete('sources/' + id)
+    },
+    update(source) {
+        return Api.put('sources/' + source.id, source)
+    },
+    getById(id) {
+        return Api.get('sources/' + id)
     }
 }

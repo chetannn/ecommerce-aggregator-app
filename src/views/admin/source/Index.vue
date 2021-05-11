@@ -1,41 +1,9 @@
 <template>
   <v-container fluid>
-    <!-- <v-row class="ma-0">
-      <v-card width="100%" class="ma-1">
-        <v-card-text>
-          <v-row no-gutters>
-            <v-col cols="12" md="6" class="d-flex justify-space-between justify-md-start">
-              <v-btn to="/user/add" color="success" class="button-shadow mr-3">
-                <v-icon class="mr-2">mdi-plus</v-icon>
-                Add
-              </v-btn>
-              <v-btn color="primary" outlined class="button-shadow">
-                <v-icon class="mr-2">mdi-filter-variant</v-icon>
-                Filters
-              </v-btn>
-            </v-col>
-            <v-col cols="12" md="6" class="d-flex justify-end mt-3 mt-md-0">
-              <v-btn color="secondary" outlined :block=$vuetify.breakpoint.smAndDown>
-                <v-icon class="mr-3">mdi-download</v-icon>
-                Download
-              </v-btn>
-            </v-col>
-            <v-col cols="12" class="d-flex justify-end mt-3">
-              <div :style="$vuetify.breakpoint.smAndDown ? 'width: 100%' : 'width: 250px'">
-                <v-text-field
-                  dense
-                  :full-width=$vuetify.breakpoint.smAndDown
-                  outlined
-                  hide-details
-                  label="Search"
-                  prepend-inner-icon="mdi-magnify"
-                ></v-text-field>
-              </div>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-row> -->
+    <SourceAdd ref="sourceAdd" @onAddSource="onAddSource" />
+    <SourceEdit ref="sourceEdit" @onSourceUpdate="onSourceUpdate" />
+    <CategoryLinkAdd ref="categoryLinkAdd" @onAddCategoryLink="onAddCategoryLink" />
+    <CategoryLinkEdit ref="categoryLinkEdit" @onCategoryLinkUpdate="onCategoryLinkUpdate" />
 
     <v-row class="mb-2">
       <v-col cols="12" md="4">
@@ -74,14 +42,14 @@
             <v-toolbar-title>Sources</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <!-- <v-spacer></v-spacer> -->
-            <v-btn @click="dialog = true" dark class="primary mr-2"
+            <v-btn @click="openSourceDialog" dark class="primary mr-2"
               >Add<v-icon>mdi-plus</v-icon></v-btn
             >
           </v-toolbar>
         </template>
 
         <template v-slot:[`item.actions`]="{ item }">
-          <v-btn dark icon class="success">
+          <v-btn @click="onEditSourceClick(item)" dark icon class="success">
             <v-icon small> mdi-pencil-outline </v-icon>
           </v-btn>
 
@@ -118,7 +86,7 @@
             <!-- <v-spacer></v-spacer> -->
             <v-btn
               v-if="showCategory"
-              @click="linkDialog = true"
+              @click="openCategoryLinkAddDialog"
               dark
               class="primary mr-2"
               >Add<v-icon>mdi-plus</v-icon></v-btn
@@ -135,69 +103,21 @@
         </template>
 
         <template v-slot:[`item.actions`]="{ item }">
-          <v-btn dark icon class="success">
+          <v-btn @click="onEditCategoryLinkClick(item)" dark icon class="success">
             <v-icon small> mdi-pencil-outline </v-icon>
           </v-btn>
 
-          <v-btn @click="onDeleteCategoryLink(item)" class="ml-2 error" dark icon>
+          <v-btn
+            @click="onDeleteCategoryLink(item)"
+            class="ml-2 error"
+            dark
+            icon
+          >
             <v-icon small> mdi-delete-outline </v-icon>
           </v-btn>
         </template>
       </v-data-table>
     </v-card>
-
-    <v-dialog persistent v-model="dialog" max-width="500">
-      <v-card>
-        <v-card-title class="white--text headline primary mb-4">
-          Add Source
-          <v-spacer />
-          <v-btn icon text color="white" @click="dialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-title>
-
-        <v-card-text>
-          <v-text-field
-            v-model="form.name"
-            outlined
-            label="Name"
-          ></v-text-field>
-          <v-text-field v-model="form.url" outlined label="Link"></v-text-field>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer />
-          <v-btn text @click="dialog = false">Cancel</v-btn>
-          <v-btn color="primary" @click="save" text>Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog persistent v-model="linkDialog" max-width="500">
-      <v-card>
-        <v-card-title class="white--text headline primary mb-4">
-          Add Link
-          <v-spacer />
-          <v-btn icon text color="white" @click="linkDialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-card-title>
-
-        <v-card-text>
-          <v-text-field
-            v-model="linkForm.link"
-            outlined
-            label="Link"
-          ></v-text-field>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer />
-          <v-btn text @click="linkDialog = false">Cancel</v-btn>
-          <v-btn color="primary" @click="saveLink" text>Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-container>
 </template>
 
@@ -206,8 +126,18 @@ import SourceService from "@/services/SourceService";
 import CategoryLinkService from "@/services/CategoryLinkService";
 import moment from "moment";
 import { mapMutations } from "vuex";
+import SourceAdd from "./Add";
+import SourceEdit from './Edit'
+import CategoryLinkAdd from './link/Add'
+import CategoryLinkEdit from './link/Edit'
 
 export default {
+  components: {
+    SourceAdd,
+    SourceEdit,
+    CategoryLinkAdd,
+    CategoryLinkEdit
+  },
   data() {
     return {
       headers: [
@@ -238,6 +168,7 @@ export default {
         sourceId: null,
       },
       showCategory: false,
+      selectedSourceId: null
     };
   },
   mounted() {
@@ -257,6 +188,33 @@ export default {
     formatDate(date) {
       return moment(date).format("LLL");
     },
+    openSourceDialog() {
+      this.$refs.sourceAdd.create();
+    },
+    onAddSource(data) {
+      SourceService.all({}).then((res) => {
+        this.sources = res.data.data.items;
+        this.loading = false;
+      });
+    },
+    onSourceUpdate(res) {
+      SourceService.all({}).then((res) => {
+        this.sources = res.data.data.items;
+        this.loading = false;
+      });
+    },
+    openCategoryLinkAddDialog() {
+      this.$refs.categoryLinkAdd.create(this.selectedSourceId)
+    },
+    onAddCategoryLink(link) {
+
+    },
+    onCategoryLinkUpdate(res) {
+
+    },
+    onEditCategoryLinkClick(link) {
+      this.$refs.categoryLinkEdit.edit(link.id)
+    },
     save() {
       SourceService.create(this.form).then((res) => {
         if (res.status === 201) {
@@ -268,19 +226,13 @@ export default {
         }
       });
     },
-    saveLink() {
-      CategoryLinkService.create(this.linkForm).then((res) => {
-        if (res.status === 201) {
-          this.linkDialog = false;
-          this.setSnackbar({
-            message: res.data.message,
-            color: "success",
-          });
-        }
-      });
+    onEditSourceClick(source) {
+      this.$refs.sourceEdit.edit(source.id)
     },
+    
     onSourceRowDoubleClick(e, { item, select }) {
-      this.linkForm.sourceId = item.id;
+      // this.linkForm.sourceId = item.id;
+      this.selectedSourceId = item.id
       select(true);
       CategoryLinkService.getAllCategoryLinksBySourceId(item.id)
         .then((res) => {
