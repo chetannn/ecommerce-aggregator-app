@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <v-container fluid>
+      <h2>User Favorites</h2>
     <v-card class="mx-2 my-2">
     <v-data-table :items="favorites" :headers="headers">
       <template v-slot:[`item.actions`]="{ item }">
@@ -49,7 +50,7 @@
         </v-card-text>
       </v-card>
    </v-dialog>
-    </div>
+    </v-container>
 </template>
 
 <script>

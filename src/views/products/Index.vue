@@ -18,7 +18,7 @@
                   <v-list-item-content>
                     <v-row>
                       <v-col>
-                        <v-text-field label="Product Name"></v-text-field>
+                        <v-text-field v-model="filters.productName" label="Product Name"></v-text-field>
                       </v-col>
                     </v-row>
                     <v-row>
@@ -27,6 +27,7 @@
                           type="number"
                           outlined
                           label="Min"
+                          v-model="filters.min"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" md="5">
@@ -34,11 +35,12 @@
                           type="number"
                           outlined
                           label="Max"
+                          v-model="filters.max"
                         ></v-text-field>
                       </v-col>
 
                       <v-col cols="12" md="2">
-                        <v-btn class="align-items-center" icon>
+                        <v-btn @click="search" class="align-items-center" icon>
                           <v-icon>mdi-magnify</v-icon>
                         </v-btn>
                       </v-col>
@@ -139,21 +141,40 @@ export default {
       sources: [],
       currentPage: 0,
       totalPages: 0,
+      filters: {
+        min: 0,
+        max: null,
+        productName: ''
+      }
     };
   },
   methods: {
       ...mapMutations({
       setSnackbar: "snackbar/setSnackbar",
     }),
-    async handlePageChange(value) {
-      this.currentPage = value;
+    async search() {
       const response = await ProductService.all({
         perPage: 5,
         page: this.currentPage,
+        minPrice: this.filters.min,
+        maxPrice: this.filters.max,
+        productName: this.filters.productName
       });
+
       this.totalPages = response.data.data.totalPages;
       this.currentPage = response.data.data.currentPage;
       this.products = response.data.data.items;
+    },
+    async handlePageChange(value) {
+      this.currentPage = value;
+      // const response = await ProductService.all({
+      //   perPage: 5,
+      //   page: this.currentPage,
+      // });
+      // this.totalPages = response.data.data.totalPages;
+      // this.currentPage = response.data.data.currentPage;
+      // this.products = response.data.data.items;
+      await this.search()
       this.$vuetify.goTo(0);
     },
     openLink(product) {
