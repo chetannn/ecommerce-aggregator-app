@@ -81,23 +81,43 @@ const routes = [
     children: [{
       path: 'dashboard',
       name: 'dashboard',
-      component: Dashboard
+      component: Dashboard,
+      meta: {
+        requiresAuth: true,
+        isAdmin: true
+      }
     }, {
       path: 'source',
       name: 'source',
-      component: Sources
+      component: Sources,
+      meta: {
+        requiresAuth: true,
+        isAdmin: true
+      }
     }, {
       path: 'users',
       name: 'users',
-      component: Users
+      component: Users,
+      meta: {
+        requiresAuth: true,
+        isAdmin: true
+      }
     }, {
       path: 'productManagement',
       name: 'productManagement',
-      component: ProductManagement
+      component: ProductManagement,
+      meta: {
+        requiresAuth: true,
+        isAdmin: true
+      }
     }, {
       path: 'favorites',
       name: 'adminFavorites',
-      component: AdminFavorite
+      component: AdminFavorite,
+      meta: {
+        requiresAuth: true,
+        isAdmin: true
+      }
     }]
   }
  
@@ -110,6 +130,14 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth && record.meta.isAdmin)) {
+    if(!(store.getters['auth/authenticated'] && store.getters['auth/authenticated'].isAdmin)) {
+      return next({
+        name: 'home'
+      })
+    }
+    next()
+  }
   if(to.matched.some(record => record.meta.requiresAuth)) {
       if(!store.getters['auth/authenticated']) {
         return next({

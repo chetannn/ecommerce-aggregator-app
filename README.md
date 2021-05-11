@@ -41,5 +41,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * [x] Add nprogress and confirm dialog library [done]
 * [x] Implement confirm dialog everywhere (done)
 * [x] Implement crud overall admin panel (source, users, links) (done)
-* [] Only allow admin users to visit admin page (higher priority)
+* [x] Only allow admin users to visit admin page (higher priority) (done)
 * [] Password change feature (add if possible)
