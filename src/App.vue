@@ -23,3 +23,14 @@ export default {
   }
 };
 </script>
+
+<style>
+  #nprogress .bar {
+  background: red !important;
+  height: 10px;
+}
+#nprogress .spinner-icon {
+  border-left-color: green !important;
+  border-top-color: yellow  !important;
+}
+</style>
