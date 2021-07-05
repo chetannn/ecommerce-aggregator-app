@@ -22,7 +22,7 @@
             </v-btn>
             <div class="ml-4 mr-1">
               <h2>
-                100
+                {{ stats[0].sasto_count }}
               </h2>
               <h5 class="subtitle-2 font-weight-bold">
                  Sastodeal
@@ -51,7 +51,7 @@
             </v-btn>
             <div class="ml-4 mr-1">
               <h2>
-                200
+                {{ stats[0].ok_count }}
               </h2>
               <h5 class="subtitle-2 font-weight-bold">
                  Okdam
@@ -81,10 +81,10 @@
             </v-btn>
             <div class="ml-4 mr-1">
               <h2>
-                200
+                {{ stats[0].muncha_count }}
               </h2>
               <h5 class="subtitle-2 font-weight-bold">
-                 Smartdoko
+                 Muncha
               </h5>
             </div>
           </div>
@@ -92,7 +92,7 @@
       </v-card>
     </v-col>
 
-    <v-col
+    <!-- <v-col
       cols="12"
       lg="4"
       sm="6"
@@ -119,7 +119,7 @@
           </div>
         </v-card-text>
       </v-card>
-    </v-col>
+    </v-col> -->
   </v-row>
       
       <!-- <v-row>
@@ -132,14 +132,27 @@
 </template>
 
 <script>
+import Api from '@/services/Api'
+
 export default {
     data() {
         return {
             headers: [
                 { text: 'Name', value: 'name' },
                 { text: 'Price', value: 'price' }
-            ]
+            ],
+            stats: [{
+              sasto_count: 0,
+              ok_count: 0,
+              muncha_count: 0
+            }]
         }
+    },
+    mounted() {
+      Api.get('dashboard')
+      .then(res => {
+        this.stats = res.data
+      })
     }
 }
 </script>

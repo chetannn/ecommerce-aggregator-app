@@ -5,12 +5,12 @@
       <v-col :key="favorite.id" v-for="favorite in favorites" cols="12" md="4">
         <v-card class="mx-auto" max-width="400">
           <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+            :src="favorite.Product.imageUrl"
             height="200px"
           ></v-img>
 
           <v-card-title
-            ><a>{{ favorite.Product.productName }}</a></v-card-title
+            ><a @click="openLink(favorite.Product)">{{ favorite.Product.productName }}</a></v-card-title
           >
 
           <v-card-subtitle>
@@ -63,6 +63,9 @@ export default {
         }
       })
     },
+    openLink(product) {
+      window.open(product.productLink, "_blank");
+    }
   },
 };
 </script>

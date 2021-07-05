@@ -18,7 +18,7 @@ export default {
         return Api.delete(`users/${id}`)
     },
     stats() {
-        return Api.get('users/statistics')
+        return Api.get('statistics/users')
     },
     getUserById(id) {
         return Api.get('users/' + id)

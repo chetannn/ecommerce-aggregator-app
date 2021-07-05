@@ -13,6 +13,11 @@
       <v-spacer></v-spacer>
       <v-btn text @click="$router.push('/products')">Products</v-btn>
       <v-btn @click="$router.push('/favorites')" icon><v-icon>mdi-heart</v-icon></v-btn>
+       <v-btn @click="$vuetify.theme.dark = !$vuetify.theme.dark" icon
+        ><v-icon>{{
+          $vuetify.theme.dark ? "mdi-weather-night" : "mdi-weather-sunny"
+        }}</v-icon></v-btn
+      >
 
         <v-menu
       min-width="180"
